@@ -25,9 +25,9 @@ namespace ALightInTheDark
         // Empty method to give an example
         // Like when this button is clicked the FSM
         // does this etc.
-        public void Click()
+        public bool Click()
         {
-
+            return true;
         }
     }
 }

@@ -78,7 +78,84 @@ namespace ALightInTheDark
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            switch (gameState)
+            {
+                case State.MainMenu:
+                    if (start.Click())
+                    {
+                        gameState = State.Game;
+                    }
+                    if (options.Click())
+                    {
+                        prevState = State.MainMenu;
+                        gameState = State.Options;
+                    }
+                    if (controls.Click())
+                    {
+                        prevState = State.MainMenu;
+                        gameState = State.Controls;
+                    }
+                    if (quit.Click())
+                    {
+                        // Code to quit the game
+                    }
+                    break;
+                case State.Options:
+                    // Various buttons for options and their functions
+                    if (back.Click())
+                    {
+                        gameState = prevState;
+                    }
+                    break;
+                case State.Controls:
+                    // Various buttons for controls and their functions
+                    if (back.Click())
+                    {
+                        gameState = prevState;
+                    }
+                    break;
+                case State.Pause:
+                    if (back.Click())
+                    {
+                        gameState = prevState;
+                    }
+                    if (controls.Click())
+                    {
+                        prevState = State.Pause;
+                        gameState = State.Controls;
+                    }
+                    if (restart.Click())
+                    {
+                        gameState = State.Game;
+                        // Code to restart the level
+                    }
+                    if (quit.Click())
+                    {
+                        gameState = State.MainMenu;
+                    }
+                    break;
+                case State.Game:
+                    if (win)
+                    {
+                        gameState = State.Victory;
+                    }
+                    if (kbState.IsKeyDown(Keys.Escape))
+                    {
+                        prevState = State.Game;
+                        gameState = State.Pause;
+                    }
+                    break;
+                case State.Victory:
+                    if (start.Click())
+                    {
+                        // Move on to the next level
+                    }
+                    if (quit.Click())
+                    {
+                        gameState = State.MainMenu;
+                    }
+                    break;
+            }
 
             base.Update(gameTime);
         }
