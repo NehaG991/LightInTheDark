@@ -34,6 +34,18 @@ namespace ALightInTheDark
 
 
         //Properties
+        public bool Grounded
+        {
+            get
+            {
+                return grounded;
+            }
+            set
+            {
+                grounded = value;
+            }
+        }
+        /*
         public int VelocityX
         {
             get
@@ -78,17 +90,7 @@ namespace ALightInTheDark
                 accelY = value;
             }
         }
-        public bool Grounded
-        {
-            get
-            {
-                return grounded;
-            }
-            set
-            {
-                grounded = value;
-            }
-        }
+        */ //I made properties for more ofthe variables, but I realized I don't think they're needed, so for now they're commented out
 
         //Constructor
         public Player(int x, int y, Texture2D texture)
