@@ -15,6 +15,9 @@ namespace ALightInTheDark
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        KeyboardState kbState = new KeyboardState();
+        State gameState = State.MainMenu;
+        State prevState = State.MainMenu;
 
         public Game1()
         {
