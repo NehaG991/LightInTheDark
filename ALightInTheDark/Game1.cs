@@ -168,7 +168,31 @@ namespace ALightInTheDark
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+
+            switch (gameState)
+            {
+                case State.MainMenu:
+                    // Draw the main menu buttons
+                    break;
+                case State.Options:
+                    // Draw any options we have
+                    break;
+                case State.Controls:
+                    // Draw the control buttons
+                    break;
+                case State.Pause:
+                    // Draw the pause buttons
+                    break;
+                case State.Game:
+                    // Draw all the game stuff
+                    break;
+                case State.Victory:
+                    // Draw the victory stuff
+                    break;
+            }
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
