@@ -6,7 +6,7 @@ namespace ALightInTheDark
 {
     enum State
     {
-        MainMenu, Options, Controls, Pause, Game, Victory
+        MainMenu, Options, Controls, Pause, Game, Victory, EasyMode
     }
     /// <summary>
     /// This is the main type for your game.
@@ -144,6 +144,7 @@ namespace ALightInTheDark
                         prevState = State.Game;
                         gameState = State.Pause;
                     }
+                    // Other game update code
                     break;
                 case State.Victory:
                     if (start.Click())
@@ -154,6 +155,18 @@ namespace ALightInTheDark
                     {
                         gameState = State.MainMenu;
                     }
+                    break;
+                case State.EasyMode:
+                    if (win)
+                    {
+                        gameState = State.Victory;
+                    }
+                    if (kbState.IsKeyDown(Keys.Escape))
+                    {
+                        prevState = State.EasyMode;
+                        gameState = State.Pause;
+                    }
+                    // Easy game update code
                     break;
             }
 
@@ -189,6 +202,9 @@ namespace ALightInTheDark
                     break;
                 case State.Victory:
                     // Draw the victory stuff
+                    break;
+                case State.EasyMode:
+                    // Draw all the easy mdoe game stuff
                     break;
             }
 
