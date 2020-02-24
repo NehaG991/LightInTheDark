@@ -4,6 +4,10 @@ using Microsoft.Xna.Framework.Input;
 
 namespace ALightInTheDark
 {
+    enum State
+    {
+        MainMenu, Options, Controls, Pause, Game, Victory
+    }
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
