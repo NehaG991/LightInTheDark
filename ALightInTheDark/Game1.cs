@@ -15,9 +15,18 @@ namespace ALightInTheDark
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
         KeyboardState kbState = new KeyboardState();
         State gameState = State.MainMenu;
-        State prevState = State.MainMenu;
+        State prevState = State.MainMenu; // Used to access the previous game state (like with a back button)
+
+        TempButton start = new TempButton();
+        TempButton options = new TempButton();
+        TempButton controls = new TempButton();
+        TempButton quit = new TempButton();
+        TempButton back = new TempButton();
+        TempButton restart = new TempButton();
+        bool win = false;
 
         public Game1()
         {
