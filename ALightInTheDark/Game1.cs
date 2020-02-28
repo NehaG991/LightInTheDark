@@ -1,4 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -27,6 +32,8 @@ namespace ALightInTheDark
         TempButton back = new TempButton();
         TempButton restart = new TempButton();
         bool win = false;
+
+        List<GameObject> walls;
 
         public Game1()
         {
@@ -204,7 +211,7 @@ namespace ALightInTheDark
                     // Draw the victory stuff
                     break;
                 case State.EasyMode:
-                    // Draw all the easy mdoe game stuff
+                    // Draw all the easy mode game stuff
                     break;
             }
 
@@ -212,5 +219,39 @@ namespace ALightInTheDark
 
             base.Draw(gameTime);
         }
+
+        //This makes the player move each frame, unless obstructed by a wall [This is probably not the greatest way of acomplishing this
+        private void MovementManager(Player player)
+        {
+            //This list will store all wall tiles that the player would hit on its current path
+            List<GameObject> wallsHit = new List<GameObject>();
+            //THis makes a temporary rectangle where the player would end up if unimpeded
+            Rectangle theoreticalPosition = new Rectangle(player.X + player.VelocityX, player.Y + player.VelocityY, player.Position.Width, player.Position.Height);
+
+            for (int i = 0; i < walls.Count; i++)
+            {
+                if (walls[i].Position.Intersects(theoreticalPosition))
+                {
+                    wallsHit.Add(walls[i]);
+                }
+            }
+            if(wallsHit.Count == 0)
+            {
+                player.X += player.VelocityX;
+                player.Y += player.VelocityY;
+            }
+            else
+            {
+                int i = 0;
+                int max = Math.Abs(player.VelocityX) + Math.Abs(player.VelocityY);
+                while (i < max)
+                {
+                    //TO DO: SLOWLY INCREMENT THE POSITION UNTIL A COLLISION OCCURS, THEN STOP WHEN COLLIDE
+                }
+            }
+
+
+        }
+
     }
 }

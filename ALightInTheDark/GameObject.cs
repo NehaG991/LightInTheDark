@@ -16,6 +16,7 @@ namespace ALightInTheDark
         protected Texture2D texture;
 
         //Properties
+        public Rectangle Position { get { return position; } }
         public int X
         {
             get

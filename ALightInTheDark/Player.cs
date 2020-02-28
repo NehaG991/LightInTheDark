@@ -45,7 +45,6 @@ namespace ALightInTheDark
                 grounded = value;
             }
         }
-        /*
         public int VelocityX
         {
             get
@@ -90,8 +89,7 @@ namespace ALightInTheDark
                 accelY = value;
             }
         }
-        */ //I made properties for more ofthe variables, but I realized I don't think they're needed, so for now they're commented out
-
+        
         //Constructor
         public Player(int x, int y, Texture2D texture)
             : base(x, y, texture.Width, texture.Height, texture)
@@ -111,14 +109,9 @@ namespace ALightInTheDark
         //Method
 
         //manages the players movement, using the values of acceleration, as well as how fast the player is able to move
-        public void Movement(KeyboardState kb, bool grounded)
+        public void Movement(KeyboardState kb)
         {
-
-            this.grounded = grounded;
-
-            //Updates position and velocity
-            X += velocityX;
-            Y += velocityY;
+            //Updates velocity
             velocityX += accelX;
             velocityY += accelY;
 
@@ -174,6 +167,7 @@ namespace ALightInTheDark
             if (!kbOld.IsKeyDown(Keys.W) && !kbOld.IsKeyDown(Keys.Space) && grounded) //Makes sure that this is a fresh press, and that the player is on the ground before jumping
             {
                 velocityY = velocityYMax; //This sets the player to the maximum upward velocity
+                grounded = false;
             }
         }
 
