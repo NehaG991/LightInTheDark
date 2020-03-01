@@ -16,6 +16,9 @@ namespace ALightInTheDark
     /// </summary>
     class TempButton
     {
+        private Texture2D defaultTexture, hoverTexture;
+        private Rectangle rectangle;
+
         // Empty constructor to be replaced
         public TempButton()
         {
@@ -28,6 +31,22 @@ namespace ALightInTheDark
         public bool Click()
         {
             return true;
+        }
+
+        // Temporary constructor to hold a texture and rectangle
+        public TempButton(Texture2D defaultTexture, Rectangle rectangle)
+        {
+            this.rectangle = rectangle;
+            this.defaultTexture = defaultTexture;
+        }
+
+        /// <summary>
+        /// Draw the button with the default texture
+        /// </summary>
+        /// <param name="sb"></param>
+        public void DrawButton(SpriteBatch sb)
+        {
+            sb.Draw(defaultTexture, rectangle, Color.White);
         }
     }
 }

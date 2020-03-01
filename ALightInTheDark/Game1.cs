@@ -31,6 +31,7 @@ namespace ALightInTheDark
         TempButton quit = new TempButton();
         TempButton back = new TempButton();
         TempButton restart = new TempButton();
+        TempButton resume = new TempButton();
         bool win = false;
 
         List<GameObject> walls;
@@ -64,6 +65,16 @@ namespace ALightInTheDark
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            // create the buttons
+            start = new TempButton(Content.Load<Texture2D>("startButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 100, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
+            options = new TempButton(Content.Load<Texture2D>("optionsButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 30, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
+            controls = new TempButton(Content.Load<Texture2D>("controlsButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 + 40, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
+            quit = new TempButton(Content.Load<Texture2D>("quitButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 + 110, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
+           // back = new TempButton(Content.Load<Texture2D>("backButton")); Nothing here because I don't know where to put it yet
+            resume = new TempButton(Content.Load<Texture2D>("resumeButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 100, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
+            restart = new TempButton(Content.Load<Texture2D>("restartButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 30, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
+
         }
 
         /// <summary>
@@ -186,7 +197,8 @@ namespace ALightInTheDark
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            // Removing this temporarily to prevent flashing
+            //GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
 
@@ -194,6 +206,10 @@ namespace ALightInTheDark
             {
                 case State.MainMenu:
                     // Draw the main menu buttons
+                    start.DrawButton(spriteBatch);
+                    options.DrawButton(spriteBatch);
+                    controls.DrawButton(spriteBatch);
+                    quit.DrawButton(spriteBatch);
                     break;
                 case State.Options:
                     // Draw any options we have
@@ -203,6 +219,10 @@ namespace ALightInTheDark
                     break;
                 case State.Pause:
                     // Draw the pause buttons
+                    resume.DrawButton(spriteBatch);
+                    restart.DrawButton(spriteBatch);
+                    controls.DrawButton(spriteBatch);
+                    quit.DrawButton(spriteBatch);
                     break;
                 case State.Game:
                     // Draw all the game stuff
