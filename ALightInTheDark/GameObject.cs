@@ -47,13 +47,18 @@ namespace ALightInTheDark
             this.texture = image;
         }
 
+        public GameObject(Rectangle pos)
+        {
+            position = pos;
+        }
+
 
         //Methods
 
         //Draws the object
-        public virtual void Draw(SpriteBatch sb)
+        /*public virtual void Draw(SpriteBatch sb)
         {
             sb.Draw(texture, position, Color.White);
-        }
+        }*/
     }
 }

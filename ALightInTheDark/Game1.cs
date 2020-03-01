@@ -22,7 +22,7 @@ namespace ALightInTheDark
         SpriteBatch spriteBatch;
 
         KeyboardState kbState = new KeyboardState();
-        State gameState = State.MainMenu;
+        State gameState = State.Game;
         State prevState = State.MainMenu; // Used to access the previous game state (like with a back button)
 
         TempButton start = new TempButton();
@@ -35,6 +35,12 @@ namespace ALightInTheDark
         bool win = false;
 
         List<GameObject> walls;
+
+        // sprite textures
+        Texture2D platform;
+
+        // levels
+        LevelReader test;
 
         public Game1()
         {
@@ -75,6 +81,13 @@ namespace ALightInTheDark
             resume = new TempButton(Content.Load<Texture2D>("resumeButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 100, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
             restart = new TempButton(Content.Load<Texture2D>("restartButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 30, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
 
+
+            // sprite loading
+            platform = Content.Load<Texture2D>("platform");
+
+
+            // loading levels
+            test = new LevelReader(platform, @"C:\Users\nehag\OneDrive\Desktop\test.level");
         }
 
         /// <summary>
@@ -226,6 +239,12 @@ namespace ALightInTheDark
                     break;
                 case State.Game:
                     // Draw all the game stuff
+                    // changing window size
+                    graphics.PreferredBackBufferWidth = 1000;
+                    graphics.PreferredBackBufferHeight = 725;
+                    graphics.ApplyChanges();
+                    // test level
+                    test.ReadFile(spriteBatch);
                     break;
                 case State.Victory:
                     // Draw the victory stuff
