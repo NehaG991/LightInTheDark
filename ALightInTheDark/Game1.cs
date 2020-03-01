@@ -242,12 +242,18 @@ namespace ALightInTheDark
                     break;
                 case State.Game:
                     // Draw all the game stuff
+
+
                     // changing window size
                     graphics.PreferredBackBufferWidth = 1000;
                     graphics.PreferredBackBufferHeight = 725;
                     graphics.ApplyChanges();
+
+
                     // test level
+                    // reading the file 
                     test.ReadFile(spriteBatch);
+
                     break;
                 case State.Victory:
                     // Draw the victory stuff
