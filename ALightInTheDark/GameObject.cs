@@ -41,11 +41,11 @@ namespace ALightInTheDark
         }
 
         //Constructor
-        public GameObject(int x, int y, int width, int height, Texture2D image)
+        /*public GameObject(int x, int y, int width, int height, Texture2D image)
         {
             position = new Rectangle(x, y, width, height);
             this.texture = image;
-        }
+        }*/
 
         public GameObject(Rectangle pos)
         {

@@ -17,6 +17,7 @@ namespace ALightInTheDark
 
         // sprite variables
         Texture2D platform;
+        Texture2D playerSprite; 
 
         // file path variable
         private string filePath;
@@ -25,7 +26,7 @@ namespace ALightInTheDark
         private List<GameObject> interactable;
 
         // gameobject for player
-        private GameObject player;
+        private Player player;
 
         // property for file path
         public string FilePath
@@ -37,7 +38,7 @@ namespace ALightInTheDark
         }
 
         // property for player gameobject
-        public GameObject Player
+        public Player Player
         {
             get
             {
@@ -55,11 +56,12 @@ namespace ALightInTheDark
         }
 
         // constructor
-        public LevelReader(Texture2D plat, string path)
+        public LevelReader(Texture2D plat, Texture2D play, string path)
         {
             filePath = path;
             interactable = new List<GameObject>();
             platform = plat;
+            playerSprite = play;
         }
 
         // reading file and creating gameobjects based on file
@@ -99,6 +101,21 @@ namespace ALightInTheDark
 
                             // draws object
                             sb.Draw(platform, location, Color.White);
+                            read++;
+                            x++;
+                            break;
+                        }
+                    case 'p':
+                        {
+                            // creates rectangles for location
+                            Rectangle location = new Rectangle((x * (1000/10)), (y * (725/10)), playerSprite.Width, playerSprite.Height);
+
+                            // making the player object
+                            player = new Player(location);
+
+                            // drawing player
+                            sb.Draw(playerSprite, location, Color.White);
+
                             read++;
                             x++;
                             break;

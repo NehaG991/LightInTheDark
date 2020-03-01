@@ -38,6 +38,7 @@ namespace ALightInTheDark
 
         // sprite textures
         Texture2D platform;
+        Texture2D player;
 
         // levels
         LevelReader test;
@@ -84,11 +85,12 @@ namespace ALightInTheDark
 
             // sprite loading
             platform = Content.Load<Texture2D>("platform");
+            player = Content.Load<Texture2D>("Player");
 
 
             // loading levels
-            //test = new LevelReader(platform, @"C:\Users\nehag\OneDrive\Desktop\A Light in the Dark\ALightInTheDark\test.level");
-            test = new LevelReader(platform, @"test.level");
+            // files must be in the debug folder to work
+            test = new LevelReader(platform, player, @"test.level");
         }
 
         /// <summary>
