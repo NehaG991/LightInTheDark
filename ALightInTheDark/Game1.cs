@@ -87,7 +87,8 @@ namespace ALightInTheDark
 
 
             // loading levels
-            test = new LevelReader(platform, @"C:\Users\nehag\OneDrive\Desktop\test.level");
+            //test = new LevelReader(platform, @"C:\Users\nehag\OneDrive\Desktop\A Light in the Dark\ALightInTheDark\test.level");
+            test = new LevelReader(platform, @"test.level");
         }
 
         /// <summary>
