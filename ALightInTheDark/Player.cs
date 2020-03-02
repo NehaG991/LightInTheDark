@@ -16,6 +16,7 @@ namespace ALightInTheDark
 
         //This determines if the player is on the ground or not
         private bool grounded;
+        private bool drag;
 
         //This stores the previous keyboard input
         private KeyboardState kbOld;
@@ -96,10 +97,10 @@ namespace ALightInTheDark
         {
             velocityX = 0;
             velocityY = 0;
-            velocityXMax = 6;
-            velocityXMin = -6;
-            velocityYMax = 12;
-            velocityYMin = -12;
+            velocityXMax = 16;
+            velocityXMin = -16;
+            velocityYMax = 24;
+            velocityYMin = -24;
             accelX = 0;
             accelY = 0;
 
@@ -112,8 +113,17 @@ namespace ALightInTheDark
         public void Movement(KeyboardState kb)
         {
             //Updates velocity
-            velocityX += accelX;
-            velocityY += accelY;
+            if (drag && Math.Abs(accelX) > Math.Abs(velocityX))
+            {
+                velocityX = 0;
+                velocityY += accelY;
+            }
+            else
+            {
+                velocityX += accelX;
+                velocityY += accelY;
+            }
+            
 
             if (kbOld != null) //Prevents movement on the first frame, in order to have a value in kbOld
             {
@@ -127,10 +137,20 @@ namespace ALightInTheDark
                 //The player will accelerate downwards if in the air
                 if (!grounded)
                 {
-                    accelY = -1;
+                    accelY = -3;
                 }
+
+                //Prevents the player from going too fast
+                if (velocityX > velocityXMax)
+                    velocityX = velocityXMax;
+                if (velocityX < velocityXMin)
+                    velocityX = velocityXMin;
+                if (velocityY > velocityYMax)
+                    velocityY = velocityYMax;
+                if (velocityY < velocityYMin)
+                    velocityY = velocityYMin;
+
             }
-            //STILL NEED TO ADD ACTUAL MOVEMENT
 
             kbOld = kb;
         }
@@ -147,10 +167,12 @@ namespace ALightInTheDark
             if (kb.IsKeyDown(Keys.A) && !kb.IsKeyDown(Keys.D))
             { //Accelerate left
                 accelX = -flow;
+                drag = false;
             }
             else if (kb.IsKeyDown(Keys.D) && !kb.IsKeyDown(Keys.A))
             { //Accelerate Right
                 accelX = flow;
+                drag = false;
             }
             else //If the user is not pressing a movement button, They will accelerate in the opposite direction from the one they're moving in
             {
@@ -158,6 +180,7 @@ namespace ALightInTheDark
                     accelX = -flow;
                 if (velocityX < 0)
                     accelX = flow;
+                drag = true;
             }
         }
 

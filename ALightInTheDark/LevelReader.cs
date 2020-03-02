@@ -44,10 +44,6 @@ namespace ALightInTheDark
             {
                 return player;
             }
-            set
-            {
-                player = value;
-            }
         }
 
         // indexer for gameobjects

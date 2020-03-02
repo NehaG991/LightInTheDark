@@ -95,6 +95,7 @@ namespace ALightInTheDark
             // files must be in the debug folder to work
             test = new LevelReader(platform, player, @"test.level");
             test.ReadFile();
+            walls = test.Interactable;
         }
 
         /// <summary>
@@ -183,7 +184,7 @@ namespace ALightInTheDark
                 case State.Game:
                     {
                         kbState = Keyboard.GetState();
-                        //test.Player.Movement(kbState);
+                        MovementManager(test.Player);
                         if (win)
                         {
                             gameState = State.Victory;
@@ -311,6 +312,7 @@ namespace ALightInTheDark
         //This makes the player move each frame, unless obstructed by a wall [This is probably not the greatest way of acomplishing this
         private void MovementManager(Player player)
         {
+
             //This list will store all wall tiles that the player would hit on its current path
             List<GameObject> wallsHit = new List<GameObject>();
             //THis makes a temporary rectangle where the player would end up if unimpeded
@@ -330,15 +332,8 @@ namespace ALightInTheDark
             }
             else
             {
-                int i = 0;
-                int max = Math.Abs(player.VelocityX) + Math.Abs(player.VelocityY);
-                while (i < max)
-                {
-                    //TO DO: SLOWLY INCREMENT THE POSITION UNTIL A COLLISION OCCURS, THEN STOP WHEN COLLIDE
-                }
+                
             }
-
-
         }
 
     }
