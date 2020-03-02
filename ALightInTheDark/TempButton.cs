@@ -30,7 +30,16 @@ namespace ALightInTheDark
         // does this etc.
         public bool Click()
         {
-            return true;
+            MouseState ms = Mouse.GetState();
+            if (ms.X >= rectangle.Left &&
+                ms.X <= rectangle.Right &&
+                ms.Y >= rectangle.Top &&
+                ms.Y <= rectangle.Bottom &&
+                ms.LeftButton == ButtonState.Pressed)
+            {
+                return true;
+            }
+            return false;
         }
 
         // Temporary constructor to hold a texture and rectangle
