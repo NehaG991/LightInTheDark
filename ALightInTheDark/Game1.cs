@@ -81,7 +81,7 @@ namespace ALightInTheDark
             options = new TempButton(Content.Load<Texture2D>("optionsButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 30, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
             controls = new TempButton(Content.Load<Texture2D>("controlsButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 + 40, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
             quit = new TempButton(Content.Load<Texture2D>("quitButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 + 110, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
-           // back = new TempButton(Content.Load<Texture2D>("backButton")); Nothing here because I don't know where to put it yet
+            back = new TempButton(Content.Load<Texture2D>("backButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 + 40, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
             resume = new TempButton(Content.Load<Texture2D>("resumeButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 100, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
             restart = new TempButton(Content.Load<Texture2D>("restartButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 30, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
 
@@ -119,93 +119,108 @@ namespace ALightInTheDark
             switch (gameState)
             {
                 case State.MainMenu:
-                    if (start.Click())
                     {
-                        gameState = State.Game;
+                        if (start.Click())
+                        {
+                            gameState = State.Game;
+                        }
+                        if (options.Click())
+                        {
+                            prevState = State.MainMenu;
+                            gameState = State.Options;
+                        }
+                        if (controls.Click())
+                        {
+                            prevState = State.MainMenu;
+                            gameState = State.Controls;
+                        }
+                        if (quit.Click())
+                        {
+                            // Code to quit the game
+                        }
+                        break;
                     }
-                    if (options.Click())
-                    {
-                        prevState = State.MainMenu;
-                        gameState = State.Options;
-                    }
-                    if (controls.Click())
-                    {
-                        prevState = State.MainMenu;
-                        gameState = State.Controls;
-                    }
-                    if (quit.Click())
-                    {
-                        // Code to quit the game
-                    }
-                    break;
                 case State.Options:
-                    // Various buttons for options and their functions
-                    if (back.Click())
                     {
-                        gameState = prevState;
+                        // Various buttons for options and their functions
+                        if (back.Click())
+                        {
+                            gameState = prevState;
+                        }
+                        break;
                     }
-                    break;
                 case State.Controls:
-                    // Various buttons for controls and their functions
-                    if (back.Click())
                     {
-                        gameState = prevState;
+                        // Various buttons for controls and their functions
+                        if (back.Click())
+                        {
+                            gameState = prevState;
+                        }
+                        break;
                     }
-                    break;
                 case State.Pause:
-                    if (back.Click())
                     {
-                        gameState = prevState;
+                        if (back.Click())
+                        {
+                            gameState = prevState;
+                        }
+                        if (controls.Click())
+                        {
+                            prevState = State.Pause;
+                            gameState = State.Controls;
+                        }
+                        if (restart.Click())
+                        {
+                            gameState = State.Game;
+                            // Code to restart the level
+                        }
+                        if (quit.Click())
+                        {
+                            gameState = State.MainMenu;
+                        }
+                        break;
                     }
-                    if (controls.Click())
-                    {
-                        prevState = State.Pause;
-                        gameState = State.Controls;
-                    }
-                    if (restart.Click())
-                    {
-                        gameState = State.Game;
-                        // Code to restart the level
-                    }
-                    if (quit.Click())
-                    {
-                        gameState = State.MainMenu;
-                    }
-                    break;
                 case State.Game:
-                    if (win)
                     {
-                        gameState = State.Victory;
+                        //test.Player.Movement(kbState);
+                        if (win)
+                        {
+                            gameState = State.Victory;
+                        }
+                        if (kbState.IsKeyDown(Keys.Escape))
+                        {
+                            prevState = State.Game;
+                            gameState = State.Pause;
+                        }
+                        // Other game update code
+                        break;
                     }
-                    if (kbState.IsKeyDown(Keys.Escape))
-                    {
-                        prevState = State.Game;
-                        gameState = State.Pause;
-                    }
-                    // Other game update code
-                    break;
                 case State.Victory:
-                    if (start.Click())
                     {
-                        // Move on to the next level
+                        if (start.Click())
+                        {
+                            // Move on to the next level
+                        }
+                        if (quit.Click())
+                        {
+                            gameState = State.MainMenu;
+                        }
+                        break;
                     }
-                    if (quit.Click())
-                    {
-                        gameState = State.MainMenu;
-                    }
-                    break;
                 case State.EasyMode:
-                    if (win)
                     {
-                        gameState = State.Victory;
+                        if (win)
+                        {
+                            gameState = State.Victory;
+                        }
+                        if (kbState.IsKeyDown(Keys.Escape))
+                        {
+                            prevState = State.EasyMode;
+                            gameState = State.Pause;
+                        }
+                        // Easy game update code
+                        break;
                     }
-                    if (kbState.IsKeyDown(Keys.Escape))
-                    {
-                        prevState = State.EasyMode;
-                        gameState = State.Pause;
-                    }
-                    // Easy game update code
-                    break;
             }
 
             base.Update(gameTime);
@@ -225,33 +240,42 @@ namespace ALightInTheDark
             switch (gameState)
             {
                 case State.MainMenu:
-                    // Draw the main menu buttons
-                    start.DrawButton(spriteBatch);
-                    options.DrawButton(spriteBatch);
-                    controls.DrawButton(spriteBatch);
-                    quit.DrawButton(spriteBatch);
-                    break;
+                    {
+                        // Draw the main menu buttons
+                        start.DrawButton(spriteBatch);
+                        options.DrawButton(spriteBatch);
+                        controls.DrawButton(spriteBatch);
+                        quit.DrawButton(spriteBatch);
+                        break;
+                    }
                 case State.Options:
-                    // Draw any options we have
-                    break;
+                    {
+                        // Draw any options we have
+                        break;
+                    }
                 case State.Controls:
-                    // Draw the control buttons
-                    break;
+                    {
+                        // Draw the control buttons
+                        break;
+                    }
                 case State.Pause:
-                    // Draw the pause buttons
-                    resume.DrawButton(spriteBatch);
-                    restart.DrawButton(spriteBatch);
-                    controls.DrawButton(spriteBatch);
-                    quit.DrawButton(spriteBatch);
-                    break;
+                    {
+                        // Draw the pause buttons
+                        resume.DrawButton(spriteBatch);
+                        restart.DrawButton(spriteBatch);
+                        controls.DrawButton(spriteBatch);
+                        quit.DrawButton(spriteBatch);
+                        break;
+                    }
                 case State.Game:
-                    // Draw all the game stuff
+                    {
+                        // Draw all the game stuff
 
 
-                    // changing window size
-                    graphics.PreferredBackBufferWidth = 1000;
-                    graphics.PreferredBackBufferHeight = 725;
-                    graphics.ApplyChanges();
+                        // changing window size
+                        graphics.PreferredBackBufferWidth = 1000;
+                        graphics.PreferredBackBufferHeight = 725;
+                        graphics.ApplyChanges();
 
 
                     // test level
@@ -264,13 +288,18 @@ namespace ALightInTheDark
                     //drawing player
                     test.Player.Draw(spriteBatch);
 
-                    break;
+                        break;
+                    }
                 case State.Victory:
-                    // Draw the victory stuff
-                    break;
+                    {
+                        // Draw the victory stuff
+                        break;
+                    }
                 case State.EasyMode:
-                    // Draw all the easy mode game stuff
-                    break;
+                    {
+                        // Draw all the easy mode game stuff
+                        break;
+                    }
             }
 
             spriteBatch.End();
