@@ -62,6 +62,11 @@ namespace ALightInTheDark
             // show the mouse
             this.IsMouseVisible = true;
 
+            // changing window size
+            graphics.PreferredBackBufferWidth = 1000;
+            graphics.PreferredBackBufferHeight = 725;
+            graphics.ApplyChanges();
+
             base.Initialize();
         }
 
@@ -78,12 +83,12 @@ namespace ALightInTheDark
 
             // create the buttons
             start = new TempButton(Content.Load<Texture2D>("startButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 100, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
-            options = new TempButton(Content.Load<Texture2D>("optionsButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 30, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
-            controls = new TempButton(Content.Load<Texture2D>("controlsButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 + 40, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
-            quit = new TempButton(Content.Load<Texture2D>("quitButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 + 110, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
-            back = new TempButton(Content.Load<Texture2D>("backButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 + 150, GraphicsDevice.Viewport.Height / 2 + 150, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
+            options = new TempButton(Content.Load<Texture2D>("optionsButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
+            controls = new TempButton(Content.Load<Texture2D>("controlsButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 + 100, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
+            quit = new TempButton(Content.Load<Texture2D>("quitButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 + 200, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
+            back = new TempButton(Content.Load<Texture2D>("backButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 2 + 150, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
             resume = new TempButton(Content.Load<Texture2D>("resumeButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 100, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
-            restart = new TempButton(Content.Load<Texture2D>("restartButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 30, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
+            restart = new TempButton(Content.Load<Texture2D>("restartButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
 
 
             // sprite loading
@@ -144,7 +149,7 @@ namespace ALightInTheDark
                 case State.Options:
                     {
                         // Various buttons for options and their functions
-                        if (resume.Click())
+                        if (back.Click())
                         {
                             gameState = prevState;
                         }
@@ -153,7 +158,7 @@ namespace ALightInTheDark
                 case State.Controls:
                     {
                         // Various buttons for controls and their functions
-                        if (resume.Click())
+                        if (back.Click())
                         {
                             gameState = prevState;
                         }
@@ -276,10 +281,7 @@ namespace ALightInTheDark
                         // Draw all the game stuff
 
 
-                        // changing window size
-                        graphics.PreferredBackBufferWidth = 1000;
-                        graphics.PreferredBackBufferHeight = 725;
-                        graphics.ApplyChanges();
+                        
 
 
                     // test level
