@@ -59,6 +59,14 @@ namespace ALightInTheDark
             }
         }
 
+        public List<GameObject> Interactable
+        {
+            get
+            {
+                return interactable;
+            }
+        }
+
         // constructor
         public LevelReader(Texture2D plat, Texture2D play, string path)
         {
@@ -69,7 +77,7 @@ namespace ALightInTheDark
         }
 
         // reading file and creating gameobjects based on file
-        public void ReadFile(SpriteBatch sb)
+        public void ReadFile()
         {
             // read streams
             FileStream readStream = File.OpenRead(filePath);
@@ -101,10 +109,8 @@ namespace ALightInTheDark
                             Rectangle location = new Rectangle((x * (platform.Width * 2)), (y * platform.Height * 7), platform.Width * 2, platform.Height * 2);
 
                             // adds rectangle to location
-                            interactable.Add(new GameObject(location));
+                            interactable.Add(new GameObject(location, platform));
 
-                            // draws object
-                            sb.Draw(platform, location, Color.White);
                             read++;
                             x++;
                             break;
@@ -115,10 +121,7 @@ namespace ALightInTheDark
                             Rectangle location = new Rectangle((x * (1000/10)), (y * (725/10)), playerSprite.Width, playerSprite.Height);
 
                             // making the player object
-                            player = new Player(location);
-
-                            // drawing player
-                            sb.Draw(playerSprite, location, Color.White);
+                            player = new Player(location, playerSprite);
 
                             read++;
                             x++;

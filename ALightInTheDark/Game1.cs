@@ -94,9 +94,7 @@ namespace ALightInTheDark
             // loading levels
             // files must be in the debug folder to work
             test = new LevelReader(platform, player, @"test.level");
-
-            //test.Player = new Player(new Rectangle(0, 0, player.Width, player.Height), player);
-
+            test.ReadFile();
         }
 
         /// <summary>
@@ -281,9 +279,15 @@ namespace ALightInTheDark
                         graphics.ApplyChanges();
 
 
-                        // test level
-                        // reading the file 
-                        test.ReadFile(spriteBatch);
+                    // test level
+                    // drawing platforms
+                    for (int i = 0; i < test.Interactable.Count; i++)
+                    {
+                        test.Interactable[i].Draw(spriteBatch);
+                    }
+
+                    //drawing player
+                    test.Player.Draw(spriteBatch);
 
                         break;
                     }

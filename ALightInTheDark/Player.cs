@@ -91,8 +91,8 @@ namespace ALightInTheDark
         }
         
         //Constructor
-        public Player(Rectangle pos/*, Texture2D texture*/)
-            : base(pos)
+        public Player(Rectangle pos, Texture2D texture)
+            : base(pos, texture)
         {
             velocityX = 0;
             velocityY = 0;
