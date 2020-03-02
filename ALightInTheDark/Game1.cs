@@ -94,9 +94,7 @@ namespace ALightInTheDark
             // loading levels
             // files must be in the debug folder to work
             test = new LevelReader(platform, player, @"test.level");
-
-            //test.Player = new Player(new Rectangle(0, 0, player.Width, player.Height), player);
-
+            test.ReadFile();
         }
 
         /// <summary>
@@ -146,7 +144,7 @@ namespace ALightInTheDark
                 case State.Options:
                     {
                         // Various buttons for options and their functions
-                        if (back.Click())
+                        if (resume.Click())
                         {
                             gameState = prevState;
                         }
@@ -155,7 +153,7 @@ namespace ALightInTheDark
                 case State.Controls:
                     {
                         // Various buttons for controls and their functions
-                        if (back.Click())
+                        if (resume.Click())
                         {
                             gameState = prevState;
                         }
@@ -185,12 +183,13 @@ namespace ALightInTheDark
                     }
                 case State.Game:
                     {
+                        kbState = Keyboard.GetState();
                         //test.Player.Movement(kbState);
                         if (win)
                         {
                             gameState = State.Victory;
                         }
-                        if (kbState.IsKeyDown(Keys.Escape))
+                        if (kbState.IsKeyDown(Keys.P))
                         {
                             prevState = State.Game;
                             gameState = State.Pause;
@@ -216,7 +215,7 @@ namespace ALightInTheDark
                         {
                             gameState = State.Victory;
                         }
-                        if (kbState.IsKeyDown(Keys.Escape))
+                        if (kbState.IsKeyDown(Keys.P))
                         {
                             prevState = State.EasyMode;
                             gameState = State.Pause;
@@ -283,9 +282,15 @@ namespace ALightInTheDark
                         graphics.ApplyChanges();
 
 
-                        // test level
-                        // reading the file 
-                        test.ReadFile(spriteBatch);
+                    // test level
+                    // drawing platforms
+                    for (int i = 0; i < test.Interactable.Count; i++)
+                    {
+                        test.Interactable[i].Draw(spriteBatch);
+                    }
+
+                    //drawing player
+                    test.Player.Draw(spriteBatch);
 
                         break;
                     }
