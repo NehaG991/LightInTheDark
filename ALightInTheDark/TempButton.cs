@@ -18,30 +18,7 @@ namespace ALightInTheDark
     {
         private Texture2D defaultTexture, hoverTexture;
         private Rectangle rectangle;
-
-        // Empty method to give an example
-        // Like when this button is clicked the FSM
-        // does this etc.
-        public bool Click()
-        {
-            MouseState mouse = Mouse.GetState();
-
-            if(rectangle.Contains(mouse.X, mouse.Y))
-            {
-                // eventually this is where the hover image will be changed
-
-                if(mouse.LeftButton == ButtonState.Pressed)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                // and you would change back to default here
-            }
-
-            return false;
-        }
+        private bool hover;
 
         // Temporary constructor to hold a texture and rectangle
         public TempButton(Texture2D defaultTexture, Rectangle rectangle)
@@ -56,6 +33,32 @@ namespace ALightInTheDark
             this.rectangle = rectangle;
             this.defaultTexture = defaultTexture;
             this.hoverTexture = hoverTexture;
+            hover = false;
+        }
+
+        /// <summary>
+        /// Check whether a button is clicked on or hovered over
+        /// </summary>
+        /// <returns></returns>
+        public bool Click()
+        {
+            MouseState mouse = Mouse.GetState();
+
+            if (rectangle.Contains(mouse.X, mouse.Y))
+            {
+                hover = true;
+
+                if (mouse.LeftButton == ButtonState.Pressed)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                hover = false;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -64,7 +67,14 @@ namespace ALightInTheDark
         /// <param name="sb"></param>
         public void DrawButton(SpriteBatch sb)
         {
-            sb.Draw(defaultTexture, rectangle, Color.White);
+            if (hover)
+            {
+                sb.Draw(hoverTexture, rectangle, Color.White);
+            }
+            else
+            {
+                sb.Draw(defaultTexture, rectangle, Color.White);
+            }
         }
     }
 }
