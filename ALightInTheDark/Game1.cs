@@ -149,8 +149,7 @@ namespace ALightInTheDark
                     }
                     break;
                 case State.Pause:
-                    this.IsMouseVisible = true;
-                    if (resume.Click())
+                    if (back.Click())
                     {
                         gameState = prevState;
                     }
@@ -170,12 +169,11 @@ namespace ALightInTheDark
                     }
                     break;
                 case State.Game:
-                    kbState = Keyboard.GetState();
                     if (win)
                     {
                         gameState = State.Victory;
                     }
-                    if (kbState.IsKeyDown(Keys.P))
+                    if (kbState.IsKeyDown(Keys.Escape))
                     {
                         prevState = State.Game;
                         gameState = State.Pause;
