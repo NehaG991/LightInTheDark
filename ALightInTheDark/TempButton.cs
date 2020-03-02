@@ -19,12 +19,6 @@ namespace ALightInTheDark
         private Texture2D defaultTexture, hoverTexture;
         private Rectangle rectangle;
 
-        // Empty constructor to be replaced
-        public TempButton()
-        {
-
-        }
-
         // Empty method to give an example
         // Like when this button is clicked the FSM
         // does this etc.
@@ -54,6 +48,14 @@ namespace ALightInTheDark
         {
             this.rectangle = rectangle;
             this.defaultTexture = defaultTexture;
+        }
+
+        // Temporary constructor with two textures and rectangle
+        public TempButton(Texture2D defaultTexture, Texture2D hoverTexture, Rectangle rectangle)
+        {
+            this.rectangle = rectangle;
+            this.defaultTexture = defaultTexture;
+            this.hoverTexture = hoverTexture;
         }
 
         /// <summary>
