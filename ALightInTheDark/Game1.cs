@@ -143,7 +143,7 @@ namespace ALightInTheDark
                 case State.Options:
                     {
                         // Various buttons for options and their functions
-                        if (back.Click())
+                        if (resume.Click())
                         {
                             gameState = prevState;
                         }
@@ -152,7 +152,7 @@ namespace ALightInTheDark
                 case State.Controls:
                     {
                         // Various buttons for controls and their functions
-                        if (back.Click())
+                        if (resume.Click())
                         {
                             gameState = prevState;
                         }
@@ -160,7 +160,7 @@ namespace ALightInTheDark
                     }
                 case State.Pause:
                     {
-                        if (back.Click())
+                        if (resume.Click())
                         {
                             gameState = prevState;
                         }
@@ -182,12 +182,13 @@ namespace ALightInTheDark
                     }
                 case State.Game:
                     {
+                        kbState = Keyboard.GetState();
                         //test.Player.Movement(kbState);
                         if (win)
                         {
                             gameState = State.Victory;
                         }
-                        if (kbState.IsKeyDown(Keys.Escape))
+                        if (kbState.IsKeyDown(Keys.P))
                         {
                             prevState = State.Game;
                             gameState = State.Pause;
@@ -213,7 +214,7 @@ namespace ALightInTheDark
                         {
                             gameState = State.Victory;
                         }
-                        if (kbState.IsKeyDown(Keys.Escape))
+                        if (kbState.IsKeyDown(Keys.P))
                         {
                             prevState = State.EasyMode;
                             gameState = State.Pause;
