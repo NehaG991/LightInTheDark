@@ -30,7 +30,23 @@ namespace ALightInTheDark
         // does this etc.
         public bool Click()
         {
-            return true;
+            MouseState mouse = Mouse.GetState();
+
+            if(rectangle.Contains(mouse.X, mouse.Y))
+            {
+                // eventually this is where the hover image will be changed
+
+                if(mouse.LeftButton == ButtonState.Pressed)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                // and you would change back to default here
+            }
+
+            return false;
         }
 
         // Temporary constructor to hold a texture and rectangle
