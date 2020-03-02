@@ -81,7 +81,7 @@ namespace ALightInTheDark
             options = new TempButton(Content.Load<Texture2D>("optionsButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 30, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
             controls = new TempButton(Content.Load<Texture2D>("controlsButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 + 40, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
             quit = new TempButton(Content.Load<Texture2D>("quitButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 + 110, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
-            back = new TempButton(Content.Load<Texture2D>("backButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 + 40, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
+            back = new TempButton(Content.Load<Texture2D>("backButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 + 150, GraphicsDevice.Viewport.Height / 2 + 150, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
             resume = new TempButton(Content.Load<Texture2D>("resumeButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 100, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
             restart = new TempButton(Content.Load<Texture2D>("restartButton"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 30, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
 
@@ -139,6 +139,7 @@ namespace ALightInTheDark
                         if (quit.Click())
                         {
                             // Code to quit the game
+                            Exit();
                         }
                         break;
                     }
@@ -162,7 +163,7 @@ namespace ALightInTheDark
                     }
                 case State.Pause:
                     {
-                        if (back.Click())
+                        if (resume.Click())
                         {
                             gameState = prevState;
                         }
@@ -235,7 +236,7 @@ namespace ALightInTheDark
         protected override void Draw(GameTime gameTime)
         {
             // Removing this temporarily to prevent flashing
-            //GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
 
@@ -253,11 +254,13 @@ namespace ALightInTheDark
                 case State.Options:
                     {
                         // Draw any options we have
+                        back.DrawButton(spriteBatch);
                         break;
                     }
                 case State.Controls:
                     {
                         // Draw the control buttons
+                        back.DrawButton(spriteBatch);
                         break;
                     }
                 case State.Pause:
