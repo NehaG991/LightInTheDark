@@ -22,18 +22,16 @@ namespace ALightInTheDark
         SpriteBatch spriteBatch;
 
         KeyboardState kbState = new KeyboardState();
-        State gameState = State.Game;
+        State gameState = State.MainMenu;
         State prevState = State.MainMenu; // Used to access the previous game state (like with a back button)
 
-        Player Player;
-
-        TempButton start = new TempButton();
-        TempButton options = new TempButton();
-        TempButton controls = new TempButton();
-        TempButton quit = new TempButton();
-        TempButton back = new TempButton();
-        TempButton restart = new TempButton();
-        TempButton resume = new TempButton();
+        TempButton start;
+        TempButton options;
+        TempButton controls;
+        TempButton quit;
+        TempButton back;
+        TempButton restart;
+        TempButton resume;
         bool win = false;
 
         List<GameObject> walls;
@@ -60,6 +58,9 @@ namespace ALightInTheDark
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
+            // show the mouse
+            this.IsMouseVisible = true;
 
             base.Initialize();
         }
