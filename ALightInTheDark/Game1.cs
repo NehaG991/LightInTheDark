@@ -22,7 +22,7 @@ namespace ALightInTheDark
         SpriteBatch spriteBatch;
 
         KeyboardState kbState = new KeyboardState();
-        KeyboardState previousKbState = new KeyboardState();
+        KeyboardState kbOld = new KeyboardState();
         State gameState = State.MainMenu;
         State prevState = State.MainMenu; // Used to access the previous game state (like with a back button)
 
@@ -193,7 +193,7 @@ namespace ALightInTheDark
                     }
                 case State.Game:
                     {
-                        previousKbState = kbState;
+                        kbOld = kbState;
                         kbState = Keyboard.GetState();
                         MovementManager(test.Player);
                         if (win)
@@ -226,7 +226,7 @@ namespace ALightInTheDark
                     }
                 case State.EasyMode:
                     {
-                        previousKbState = kbState;
+                        kbOld = kbState;
                         kbState = Keyboard.GetState();
                         MovementManager(test.Player);
                         if (win)
@@ -378,7 +378,7 @@ namespace ALightInTheDark
         /// <returns>True if a single key has been pressed, false if it hasn't</returns>
         public bool SingleKeyPress(Keys key)
         {
-            if (kbState.IsKeyDown(key) && !previousKbState.IsKeyDown(key))
+            if (kbState.IsKeyDown(key) && !kbOld.IsKeyDown(key))
             {
                 return true;
             }
