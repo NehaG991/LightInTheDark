@@ -137,7 +137,7 @@ namespace ALightInTheDark
                 //The player will accelerate downwards if in the air
                 if (!grounded)
                 {
-                    accelY = -3;
+                    accelY = 1;
                 }
 
                 //Prevents the player from going too fast
@@ -189,7 +189,7 @@ namespace ALightInTheDark
         {
             if (!kbOld.IsKeyDown(Keys.W) && !kbOld.IsKeyDown(Keys.Space) && grounded) //Makes sure that this is a fresh press, and that the player is on the ground before jumping
             {
-                velocityY = velocityYMax; //This sets the player to the maximum upward velocity
+                velocityY = velocityYMin; //This sets the player to the maximum upward velocity
                 grounded = false;
             }
         }

@@ -319,26 +319,90 @@ namespace ALightInTheDark
         private void MovementManager(Player player)
         {
 
+            player.Movement(kbState);
+
             //This list will store all wall tiles that the player would hit on its current path
             List<GameObject> wallsHit = new List<GameObject>();
             //THis makes a temporary rectangle where the player would end up if unimpeded
             Rectangle theoreticalPosition = new Rectangle(player.X + player.VelocityX, player.Y + player.VelocityY, player.Position.Width, player.Position.Height);
 
-            for (int i = 0; i < walls.Count; i++)
+            for (int i = 0; i < walls.Count; i++) //checks to see what objects the player would hit on its current path
             {
                 if (walls[i].Position.Intersects(theoreticalPosition))
                 {
                     wallsHit.Add(walls[i]);
                 }
             }
-            if(wallsHit.Count == 0)
+            if(wallsHit.Count == 0) //if it hits nothing, we good
             {
                 player.X += player.VelocityX;
                 player.Y += player.VelocityY;
             }
             else
             {
-                
+                int xFrac;
+                int yFrac;
+                if (player.VelocityX > 0)
+                {
+                    xFrac = 1;
+                }
+                else if (player.VelocityX < 0)
+                {
+                    xFrac = -1;
+                }
+                else
+                {
+                    xFrac = 0;
+                }
+                if (player.VelocityY > 0)
+                {
+                    yFrac = 1;
+                }
+                else if (player.VelocityY < 0)
+                {
+                    yFrac = -1;
+                }
+                else
+                {
+                    yFrac = 0;
+                }
+
+                int xTemp = 0;
+                int yTemp = 0;
+
+                while(xTemp < Math.Abs(player.VelocityX) && yTemp < Math.Abs(player.VelocityY))
+                {
+                    if(xTemp < Math.Abs(player.VelocityX))
+                    {
+                        player.X += xFrac;
+                        for (int i = 0; i < wallsHit.Count; i++) //checks to see what objects the player would hit on its current path
+                        {
+                            if (wallsHit[i].Position.Intersects(player.Position))
+                            {
+                                player.X -= xFrac;
+                                i = wallsHit.Count;
+                                player.VelocityX = 0;
+                            }
+                        }
+                        xTemp++;
+                    }
+                    if(yTemp < Math.Abs(player.VelocityY))
+                    {
+                        player.Y += yFrac;
+                        for (int i = 0; i < wallsHit.Count; i++) //checks to see what objects the player would hit on its current path
+                        {
+                            if (wallsHit[i].Position.Intersects(player.Position))
+                            {
+                                player.Y -= yFrac;
+                                i = wallsHit.Count;
+                                player.VelocityY = 0;
+                                player.Grounded = true;
+                            }
+                        }
+                        yTemp++;
+                    }
+                }
+
             }
         }
 
