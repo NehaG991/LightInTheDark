@@ -22,6 +22,7 @@ namespace ALightInTheDark
         SpriteBatch spriteBatch;
 
         KeyboardState kbState = new KeyboardState();
+        KeyboardState kbOld = new KeyboardState();
         State gameState = State.MainMenu;
         State prevState = State.MainMenu; // Used to access the previous game state (like with a back button)
 
@@ -39,6 +40,7 @@ namespace ALightInTheDark
         // sprite textures
         Texture2D platform;
         Texture2D player;
+        Texture2D easyIndicator;
 
         // levels
         LevelReader test;
@@ -95,6 +97,7 @@ namespace ALightInTheDark
             // sprite loading
             platform = Content.Load<Texture2D>("platform");
             player = Content.Load<Texture2D>("Player");
+            easyIndicator = Content.Load<Texture2D>("easyIndicator");
 
 
             // loading levels
@@ -190,16 +193,21 @@ namespace ALightInTheDark
                     }
                 case State.Game:
                     {
+                        kbOld = kbState;
                         kbState = Keyboard.GetState();
                         MovementManager(test.Player);
                         if (win)
                         {
                             gameState = State.Victory;
                         }
-                        if (kbState.IsKeyDown(Keys.P))
+                        if (SingleKeyPress(Keys.P))
                         {
                             prevState = State.Game;
                             gameState = State.Pause;
+                        }
+                        if (SingleKeyPress(Keys.G))
+                        {
+                            gameState = State.EasyMode;
                         }
                         // Other game update code
                         break;
@@ -218,14 +226,21 @@ namespace ALightInTheDark
                     }
                 case State.EasyMode:
                     {
+                        kbOld = kbState;
+                        kbState = Keyboard.GetState();
+                        MovementManager(test.Player);
                         if (win)
                         {
                             gameState = State.Victory;
                         }
-                        if (kbState.IsKeyDown(Keys.P))
+                        if (SingleKeyPress(Keys.P))
                         {
                             prevState = State.EasyMode;
                             gameState = State.Pause;
+                        }
+                        if (SingleKeyPress(Keys.G))
+                        {
+                            gameState = State.Game;
                         }
                         // Easy game update code
                         break;
@@ -286,15 +301,15 @@ namespace ALightInTheDark
                         
 
 
-                    // test level
-                    // drawing platforms
-                    for (int i = 0; i < test.Interactable.Count; i++)
-                    {
-                        test.Interactable[i].Draw(spriteBatch);
-                    }
+                        // test level
+                        // drawing platforms
+                        for (int i = 0; i < test.Interactable.Count; i++)
+                        {
+                            test.Interactable[i].Draw(spriteBatch);
+                        }
 
-                    //drawing player
-                    test.Player.Draw(spriteBatch);
+                        //drawing player
+                        test.Player.Draw(spriteBatch);
 
                         break;
                     }
@@ -306,6 +321,20 @@ namespace ALightInTheDark
                 case State.EasyMode:
                     {
                         // Draw all the easy mode game stuff
+                        
+                        
+                        // draw easy mode indicator
+                        spriteBatch.Draw(easyIndicator, new Vector2(50, 50), Color.White);
+                        
+                        // drawing platforms
+                        for (int i = 0; i < test.Interactable.Count; i++)
+                        {
+                            test.Interactable[i].Draw(spriteBatch);
+                        }
+
+                        //drawing player
+                        test.Player.Draw(spriteBatch);
+
                         break;
                     }
             }
@@ -404,6 +433,20 @@ namespace ALightInTheDark
                 }
 
             }
+        }
+
+        /// <summary>
+        /// Checks to see if a single key has been pressed
+        /// </summary>
+        /// <param name="key">The key to check</param>
+        /// <returns>True if a single key has been pressed, false if it hasn't</returns>
+        public bool SingleKeyPress(Keys key)
+        {
+            if (kbState.IsKeyDown(key) && !kbOld.IsKeyDown(key))
+            {
+                return true;
+            }
+            return false;
         }
 
     }
