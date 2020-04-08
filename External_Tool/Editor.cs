@@ -121,19 +121,58 @@ namespace External_Tool
             string widthAsString = reader.ReadLine();
             int width = int.Parse(widthAsString);
 
-            // getting color ints and putting them into an array
+
+            // reading characters from file
+            int read = 0;
+
+            // array to hold colors
             int[] colors = new int[height * width];
-            string line = null;
-            int index = 0;
-            while ((line = reader.ReadLine()) != null)
+
+            for (int i = 0; i < (width * height); i++)
             {
-                int colorInt = int.Parse(line);
-                colors[index] = colorInt;
-                index++;
+                // reader goes to the next line if at the end of the current line
+                if (read % width == 0)
+                {
+                    reader.ReadLine();
+                }
+
+                char type = (char)reader.Read();
+
+                // switch statement to determine what color to use
+                switch (type)
+                {
+                    // platforms
+                    case '-':
+                        colors[i] = Color.Silver.ToArgb();
+                        break;
+
+                    // buttons
+                    case 'b':
+                        colors[i] = Color.Green.ToArgb();
+                        break;
+
+                    // player
+                    case 'p':
+                        colors[i] = Color.Blue.ToArgb();
+                        break;
+
+                    // levers
+                    case 'l':
+                        colors[i] = Color.SaddleBrown.ToArgb();
+                        break;
+
+                    // null
+                    case '*':
+                        colors[i] = Color.White.ToArgb();
+                        break;
+                }
+                read++;
             }
+
             // closing reader stream
             reader.Close();
 
+            // creating level
             // calculating the picture box sizes based on the number of boxes height wise and the size of the form
             this.picSize = 480 / height;
             this.total = height * width;
@@ -245,6 +284,7 @@ namespace External_Tool
                     }
 
                     // changing type string based on currently selected string
+                    // platforms
                     if (pixBox.BackColor == Color.Silver)
                     {
                         type = "-";
@@ -321,21 +361,56 @@ namespace External_Tool
                 string widthAsString = reader.ReadLine();
                 int width = int.Parse(widthAsString);
 
-                // getting color ints and putting them into an array
+                // reading characters from file
+                int read = 0;
+
+                // array to hold colors
                 int[] colors = new int[height * width];
-                string line = null;
-                int index = 0;
-                while ((line = reader.ReadLine()) != null)
+
+                for (int i = 0; i < (width * height); i++)
                 {
-                    int colorInt = int.Parse(line);
-                    colors[index] = colorInt;
-                    index++;
+                    // reader goes to the next line if at the end of the current line
+                    if (read % width == 0)
+                    {
+                        reader.ReadLine();
+                    }
+
+                    char type = (char)reader.Read();
+
+                    // switch statement to determine what color to use
+                    switch (type)
+                    {
+                        // platforms
+                        case '-':
+                            colors[i] = Color.Silver.ToArgb();
+                            break;
+
+                        // buttons
+                        case 'b':
+                            colors[i] = Color.Green.ToArgb();
+                            break;
+
+                        // player
+                        case 'p':
+                            colors[i] = Color.Blue.ToArgb();
+                            break;
+
+                        // levers
+                        case 'l':
+                            colors[i] = Color.SaddleBrown.ToArgb();
+                            break;
+
+                        // null
+                        case '*':
+                            colors[i] = Color.White.ToArgb();
+                            break;
+                    }
+                    read++;
                 }
                 // closing reader stream
                 reader.Close();
 
-                
-
+                // creating level
                 // calculating the picture box sizes based on the number of boxes height wise and the size of the form
                 this.picSize = 480 / height;
                 this.total = height * width;
@@ -379,6 +454,7 @@ namespace External_Tool
                         x += picSize;
                     }
                 }
+                
             }
 
             // messagebox saying file loaded successfully
