@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,6 +22,7 @@ namespace ALightInTheDark
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteFont font;
 
         KeyboardState kbState = new KeyboardState();
         KeyboardState kbOld = new KeyboardState();
@@ -34,6 +37,11 @@ namespace ALightInTheDark
         TempButton restart;
         TempButton resume;
         bool win = false;
+        int deaths = 0;
+        int level = 1;
+        Stopwatch stopwatch = new Stopwatch();
+        float time = 0f;
+        
 
         List<GameObject> walls;
 
@@ -41,6 +49,7 @@ namespace ALightInTheDark
         Texture2D platform;
         Texture2D player;
         Texture2D easyIndicator;
+        
 
         // levels
         LevelReader test;
@@ -92,6 +101,8 @@ namespace ALightInTheDark
             resume = new TempButton(Content.Load<Texture2D>("resumeButton"), Content.Load<Texture2D>("resumeButtonHover"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 100, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
             restart = new TempButton(Content.Load<Texture2D>("restartButton"), Content.Load<Texture2D>("restartButtonHover"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
 
+            // Load the font
+            font = Content.Load<SpriteFont>("font");
 
 
             // sprite loading
@@ -133,6 +144,7 @@ namespace ALightInTheDark
                         if (start.Click())
                         {
                             gameState = State.Game;
+                            stopwatch.Start();
                         }
                         if (options.Click())
                         {
@@ -174,6 +186,10 @@ namespace ALightInTheDark
                         if (resume.Click())
                         {
                             gameState = prevState;
+                            if (prevState == State.Game)
+                            {
+                                stopwatch.Start();
+                            }
                         }
                         if (controls.Click())
                         {
@@ -196,6 +212,7 @@ namespace ALightInTheDark
                         kbOld = kbState;
                         kbState = Keyboard.GetState();
                         MovementManager(test.Player);
+                        time = stopwatch.ElapsedMilliseconds / 1000;
                         if (win)
                         {
                             gameState = State.Victory;
@@ -204,6 +221,7 @@ namespace ALightInTheDark
                         {
                             prevState = State.Game;
                             gameState = State.Pause;
+                            stopwatch.Stop();
                         }
                         if (SingleKeyPress(Keys.G))
                         {
@@ -310,6 +328,11 @@ namespace ALightInTheDark
 
                         //drawing player
                         test.Player.Draw(spriteBatch);
+                        
+                        // Draw the UI
+                        spriteBatch.DrawString(font, "Level: " + level, new Vector2(0, 50), Color.White);
+                        spriteBatch.DrawString(font, "Time: " + time + " seconds", new Vector2(GraphicsDevice.Viewport.Width / 2 - 250, 50), Color.White);
+                        spriteBatch.DrawString(font, "Deaths: " + deaths + " deaths", new Vector2(GraphicsDevice.Viewport.Width / 2 + 75, 50), Color.White);
 
                         break;
                     }
