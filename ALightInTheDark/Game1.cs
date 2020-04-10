@@ -36,12 +36,13 @@ namespace ALightInTheDark
         TempButton back;
         TempButton restart;
         TempButton resume;
+        TempButton easy;
         bool win = false;
         int deaths = 0;
         int level = 1;
         Stopwatch stopwatch = new Stopwatch();
         float time = 0f;
-        
+        bool godMode;
 
         List<GameObject> walls;
 
@@ -101,6 +102,7 @@ namespace ALightInTheDark
             back = new TempButton(Content.Load<Texture2D>("backButton"), Content.Load<Texture2D>("backButtonHover"), new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 2 + 150, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
             resume = new TempButton(Content.Load<Texture2D>("resumeButton"), Content.Load<Texture2D>("resumeButtonHover"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 100, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
             restart = new TempButton(Content.Load<Texture2D>("restartButton"), Content.Load<Texture2D>("restartButtonHover"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
+            easy = new TempButton(Content.Load<Texture2D>("startButton"), Content.Load<Texture2D>("startButtonHover"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 100, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
 
             // Load the font
             font = Content.Load<SpriteFont>("font");
@@ -111,7 +113,7 @@ namespace ALightInTheDark
             player = Content.Load<Texture2D>("Player");
             easyIndicator = Content.Load<Texture2D>("easyIndicator");
             flashlight = Content.Load<Texture2D>("flashlight");
-
+            godMode = false;
 
             // loading levels
             // files must be in the debug folder to work
@@ -172,6 +174,12 @@ namespace ALightInTheDark
                         {
                             gameState = prevState;
                         }
+                        // enable god mode
+                        if (easy.Click())
+                        {
+                            godMode = true;
+                        }
+
                         break;
                     }
                 case State.Controls:
@@ -296,6 +304,7 @@ namespace ALightInTheDark
                     {
                         // Draw any options we have
                         back.DrawButton(spriteBatch);
+                        easy.DrawButton(spriteBatch);
                         break;
                     }
                 case State.Controls:
@@ -316,8 +325,14 @@ namespace ALightInTheDark
                 case State.Game:
                     {
                         // Draw all the game stuff
-
-                        GraphicsDevice.Clear(Color.White);
+                        if (!godMode)
+                        {
+                            GraphicsDevice.Clear(Color.White);
+                        }
+                        else
+                        {
+                            GraphicsDevice.Clear(Color.Black);
+                        }
 
 
 
@@ -332,8 +347,13 @@ namespace ALightInTheDark
                         test.Player.Draw(spriteBatch);
 
                         //drawing flashlight
-                        // vector puts clear circle at top white corner of game dimensions
-                        spriteBatch.Draw(flashlight, new Vector2(-1275 + test.Player.X, -665 + test.Player.Y), Color.White);
+
+                        if (!godMode)
+                        {
+                            // vector puts clear circle at top white corner of game dimensions
+                            spriteBatch.Draw(flashlight, new Vector2(-1275 + test.Player.X, -665 + test.Player.Y), Color.White);
+                        }
+                        
                        
                         
                         // Draw the UI

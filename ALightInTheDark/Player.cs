@@ -21,6 +21,7 @@ namespace ALightInTheDark
         //This stores the previous keyboard input
         private KeyboardState kbOld;
 
+
         //Velocity
         private int velocityX; //the speed the player is moving left/right
         private int velocityY; //the speed the player is moving up/down
@@ -35,6 +36,9 @@ namespace ALightInTheDark
 
 
         //Properties
+        /// <summary>
+        /// Get/set if the player is grounded or not
+        /// </summary>
         public bool Grounded
         {
             get
@@ -46,6 +50,10 @@ namespace ALightInTheDark
                 grounded = value;
             }
         }
+
+        /// <summary>
+        /// Get/set the X velocity
+        /// </summary>
         public int VelocityX
         {
             get
@@ -57,6 +65,10 @@ namespace ALightInTheDark
                 velocityX = value;
             }
         }
+
+        /// <summary>
+        /// Get/set the Y velocity
+        /// </summary>
         public int VelocityY
         {
             get
@@ -68,6 +80,10 @@ namespace ALightInTheDark
                 velocityY = value;
             }
         }
+
+        /// <summary>
+        /// get/set the X acceleration
+        /// </summary>
         public int AccelX
         {
             get
@@ -79,6 +95,10 @@ namespace ALightInTheDark
                 accelX = value;
             }
         }
+
+        /// <summary>
+        /// get/set the Y acceleration
+        /// </summary>
         public int AccelY
         {
             get
@@ -92,6 +112,11 @@ namespace ALightInTheDark
         }
         
         //Constructor
+        /// <summary>
+        /// Creates a new instance of a player object
+        /// </summary>
+        /// <param name="pos">Positional rect.</param>
+        /// <param name="texture">Texture to use</param>
         public Player(Rectangle pos, Texture2D texture)
             : base(pos, texture)
         {
@@ -109,7 +134,10 @@ namespace ALightInTheDark
 
         //Method
 
-        //manages the players movement, using the values of acceleration, as well as how fast the player is able to move
+        /// <summary>
+        /// Method to manage the player movement, using the value of accel., & how fast the player can move
+        /// </summary>
+        /// <param name="kb">keyboard state</param>
         public void Movement(KeyboardState kb)
         {
             //Updates velocity
@@ -155,7 +183,11 @@ namespace ALightInTheDark
             kbOld = kb;
         }
 
-        //Reads user input, and determines whether the player should be accelerating. It is called by the movement manager
+        
+        /// <summary>
+        /// Reads user input, and determines whether the player should be accelerating. It is called by the movement manager
+        /// </summary>
+        /// <param name="kb">keyboard state</param>
         private void Run(KeyboardState kb)
         {
             //'flow' changes based on whether the player is in the air or not. If they are in the air, their movement is dulled.
@@ -184,7 +216,9 @@ namespace ALightInTheDark
             }
         }
 
-        //When called, if the criteria are met, the player jumps.
+        /// <summary>
+        /// Makes player jump if this is the first frame the jump button is held & player is grounded
+        /// </summary>
         private void Jump()
         {
             if (!kbOld.IsKeyDown(Keys.W) && !kbOld.IsKeyDown(Keys.Space) && grounded) //Makes sure that this is a fresh press, and that the player is on the ground before jumping
