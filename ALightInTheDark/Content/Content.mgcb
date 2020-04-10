@@ -73,6 +73,13 @@
 /processorParam:TextureFormat=Color
 /build:easyIndicator.png
 
+#begin IndieFlowerFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:IndieFlowerFont.spritefont
+
 #begin optionsButton.png
 /importer:TextureImporter
 /processor:TextureProcessor
