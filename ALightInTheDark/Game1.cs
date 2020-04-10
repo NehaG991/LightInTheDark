@@ -49,6 +49,7 @@ namespace ALightInTheDark
         Texture2D platform;
         Texture2D player;
         Texture2D easyIndicator;
+        Texture2D flashlight;
         
 
         // levels
@@ -109,6 +110,7 @@ namespace ALightInTheDark
             platform = Content.Load<Texture2D>("platform");
             player = Content.Load<Texture2D>("Player");
             easyIndicator = Content.Load<Texture2D>("easyIndicator");
+            flashlight = Content.Load<Texture2D>("flashlight");
 
 
             // loading levels
@@ -315,8 +317,8 @@ namespace ALightInTheDark
                     {
                         // Draw all the game stuff
 
+                        GraphicsDevice.Clear(Color.White);
 
-                        
 
 
                         // test level
@@ -328,6 +330,11 @@ namespace ALightInTheDark
 
                         //drawing player
                         test.Player.Draw(spriteBatch);
+
+                        //drawing flashlight
+                        // vector puts clear circle at top white corner of game dimensions
+                        spriteBatch.Draw(flashlight, new Vector2(-1275 + test.Player.X, -665 + test.Player.Y), Color.White);
+                       
                         
                         // Draw the UI
                         spriteBatch.DrawString(font, "Level: " + level, new Vector2(0, 50), Color.White);
