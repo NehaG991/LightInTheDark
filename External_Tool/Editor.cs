@@ -161,6 +161,11 @@ namespace External_Tool
                         colors[i] = Color.SaddleBrown.ToArgb();
                         break;
 
+                    // door
+                    case 'd':
+                        colors[i] = Color.Firebrick.ToArgb();
+                        break;
+
                     // null
                     case '*':
                         colors[i] = Color.White.ToArgb();
@@ -312,6 +317,13 @@ namespace External_Tool
                         writer.Write(type + "");
                         created++;
                     }
+                    // type: door
+                    else if (pixBox.BackColor == Color.Firebrick)
+                    {
+                        type = "d";
+                        writer.Write(type + "");
+                        created++;
+                    }
                     else
                     {
                         type = "*";
@@ -398,6 +410,11 @@ namespace External_Tool
                         // levers
                         case 'l':
                             colors[i] = Color.SaddleBrown.ToArgb();
+                            break;
+
+                        // door
+                        case 'd':
+                            colors[i] = Color.Firebrick.ToArgb();
                             break;
 
                         // null

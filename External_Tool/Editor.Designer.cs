@@ -44,6 +44,7 @@
             this.currentColor = new System.Windows.Forms.PictureBox();
             this.currentBox = new System.Windows.Forms.GroupBox();
             this.mapBox = new System.Windows.Forms.GroupBox();
+            this.DoorButtonLabel = new System.Windows.Forms.Label();
             this.colorBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentColor)).BeginInit();
             this.currentBox.SuspendLayout();
@@ -117,6 +118,7 @@
             // 
             // colorBox
             // 
+            this.colorBox.Controls.Add(this.DoorButtonLabel);
             this.colorBox.Controls.Add(this.LeverButtonLabel);
             this.colorBox.Controls.Add(this.ButtonsButtonLabel);
             this.colorBox.Controls.Add(this.PlatformerButtonLabel);
@@ -231,6 +233,15 @@
             this.mapBox.TabStop = false;
             this.mapBox.Text = "Map";
             // 
+            // DoorButtonLabel
+            // 
+            this.DoorButtonLabel.AutoSize = true;
+            this.DoorButtonLabel.Location = new System.Drawing.Point(64, 143);
+            this.DoorButtonLabel.Name = "DoorButtonLabel";
+            this.DoorButtonLabel.Size = new System.Drawing.Size(39, 17);
+            this.DoorButtonLabel.TabIndex = 10;
+            this.DoorButtonLabel.Text = "Door";
+            // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -270,5 +281,6 @@
         private System.Windows.Forms.Label ButtonsButtonLabel;
         private System.Windows.Forms.Label PlatformerButtonLabel;
         private System.Windows.Forms.Label PlayerButtonLabel;
+        private System.Windows.Forms.Label DoorButtonLabel;
     }
 }
