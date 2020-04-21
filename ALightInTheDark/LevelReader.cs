@@ -17,7 +17,9 @@ namespace ALightInTheDark
 
         // sprite variables
         Texture2D platform;
-        Texture2D playerSprite; 
+        Texture2D playerSprite;
+        Texture2D closeDoor;
+        Texture2D openDoor;
 
         // file path variable
         private string filePath;
@@ -27,6 +29,9 @@ namespace ALightInTheDark
 
         // gameobject for player
         private Player player;
+
+        // gameobject for door
+        private GameObject door;
 
         // property for file path
         public string FilePath
@@ -64,12 +69,14 @@ namespace ALightInTheDark
         }
 
         // constructor
-        public LevelReader(Texture2D plat, Texture2D play, string path)
+        public LevelReader(Texture2D plat, Texture2D play, Texture2D openD, Texture2D closeD, string path)
         {
             filePath = path;
             interactable = new List<GameObject>();
             platform = plat;
             playerSprite = play;
+            closeDoor = closeD;
+            openDoor = openD;
         }
 
         // reading file and creating gameobjects based on file
@@ -99,6 +106,7 @@ namespace ALightInTheDark
                 char type = (char)reader.Read();
                 switch (type)
                 {
+                    // platforms
                     case '-':
                         {
                             // creates rectangle for location
@@ -111,6 +119,8 @@ namespace ALightInTheDark
                             x++;
                             break;
                         }
+
+                    // player
                     case 'p':
                         {
                             // creates rectangles for location
@@ -123,6 +133,23 @@ namespace ALightInTheDark
                             x++;
                             break;
                         }
+
+                    // door
+                    case 'd':
+                        {
+                            // rectangle for location
+                            Rectangle location = new Rectangle((x * (1000 / 10)), (y * (675 / 10)), closeDoor.Width, closeDoor.Height);
+
+                            // making door object and adding it to array
+                            door = new GameObject(location, closeDoor);
+                            interactable.Add(door);
+
+                            read++;
+                            x++;
+                            break;
+                        }
+
+
                     default:
                         {
                             x++;

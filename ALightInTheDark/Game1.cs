@@ -51,6 +51,8 @@ namespace ALightInTheDark
         Texture2D player;
         Texture2D easyIndicator;
         Texture2D flashlight;
+        Texture2D closedDoor;
+        Texture2D openDoor;
         
 
         // levels
@@ -113,11 +115,13 @@ namespace ALightInTheDark
             player = Content.Load<Texture2D>("Player");
             easyIndicator = Content.Load<Texture2D>("easyIndicator");
             flashlight = Content.Load<Texture2D>("flashlight");
+            closedDoor = Content.Load<Texture2D>("closeDoor");
+            openDoor = Content.Load<Texture2D>("openDoor");
             godMode = false;
 
             // loading levels
             // files must be in the debug folder to work
-            test = new LevelReader(platform, player, @"test.level");
+            test = new LevelReader(platform, player, openDoor, closedDoor, @"test.level");
             test.ReadFile();
             walls = test.Interactable;
         }
@@ -337,7 +341,7 @@ namespace ALightInTheDark
 
 
                         // test level
-                        // drawing platforms
+                        // drawing objects
                         for (int i = 0; i < test.Interactable.Count; i++)
                         {
                             test.Interactable[i].Draw(spriteBatch);
@@ -348,11 +352,11 @@ namespace ALightInTheDark
 
                         //drawing flashlight
 
-                        if (!godMode)
+                        /*if (!godMode)
                         {
                             // vector puts clear circle at top white corner of game dimensions
                             spriteBatch.Draw(flashlight, new Vector2(-1275 + test.Player.X, -665 + test.Player.Y), Color.White);
-                        }
+                        }*/
                         
                        
                         
