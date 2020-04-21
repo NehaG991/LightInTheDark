@@ -20,6 +20,10 @@ namespace ALightInTheDark
         Texture2D playerSprite;
         Texture2D closeDoor;
         Texture2D openDoor;
+        Texture2D beforeLever;
+        Texture2D afterLever;
+        Texture2D beforeButton;
+        Texture2D afterButton;
 
         // file path variable
         private string filePath;
@@ -32,6 +36,12 @@ namespace ALightInTheDark
 
         // gameobject for door
         private GameObject door;
+
+        // gameObject for lever
+        private GameObject lever;
+
+        // gameObject for button
+        private GameObject button; 
 
         // property for file path
         public string FilePath
@@ -69,7 +79,7 @@ namespace ALightInTheDark
         }
 
         // constructor
-        public LevelReader(Texture2D plat, Texture2D play, Texture2D openD, Texture2D closeD, string path)
+        public LevelReader(Texture2D plat, Texture2D play, Texture2D openD, Texture2D closeD, Texture2D beforeL, Texture2D afterL, Texture2D beforeB, Texture2D afterB, string path)
         {
             filePath = path;
             interactable = new List<GameObject>();
@@ -77,6 +87,10 @@ namespace ALightInTheDark
             playerSprite = play;
             closeDoor = closeD;
             openDoor = openD;
+            beforeLever = beforeL;
+            afterLever = afterL;
+            beforeButton = beforeB;
+            afterButton = afterB;
         }
 
         // reading file and creating gameobjects based on file
@@ -149,6 +163,35 @@ namespace ALightInTheDark
                             break;
                         }
 
+                    // lever
+                    case 'l':
+                        {
+                            // rectable for location
+                            Rectangle location = new Rectangle((x * (1000 / 10)), (y * (800 / 10)), beforeLever.Width, beforeLever.Height);
+
+                            // making lever object and adding it to array
+                            lever = new GameObject(location, beforeLever);
+                            interactable.Add(lever);
+
+                            read++;
+                            x++;
+                            break;
+                        }
+
+                    // button
+                    case 'b':
+                        {
+                            // rectangle for location
+                            Rectangle location = new Rectangle((x * (1000 / 10)), (y * (835 / 10)), beforeButton.Width, beforeButton.Height);
+
+                            // making button object and adding it to array
+                            button = new GameObject(location, beforeButton);
+                            interactable.Add(button);
+
+                            read++;
+                            x++;
+                            break;
+                        }
 
                     default:
                         {

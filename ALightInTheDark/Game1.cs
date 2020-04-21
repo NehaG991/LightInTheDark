@@ -53,7 +53,11 @@ namespace ALightInTheDark
         Texture2D flashlight;
         Texture2D closedDoor;
         Texture2D openDoor;
-        
+        Texture2D leverBefore;
+        Texture2D leverAfter;
+        Texture2D buttonBefore;
+        Texture2D buttonAfter;
+
 
         // levels
         LevelReader test;
@@ -117,11 +121,15 @@ namespace ALightInTheDark
             flashlight = Content.Load<Texture2D>("flashlight");
             closedDoor = Content.Load<Texture2D>("closeDoor");
             openDoor = Content.Load<Texture2D>("openDoor");
+            leverBefore = Content.Load<Texture2D>("leverBefore");
+            leverAfter = Content.Load<Texture2D>("leverAfter");
+            buttonBefore = Content.Load<Texture2D>("buttonBefore");
+            buttonAfter = Content.Load<Texture2D>("buttonAfter");
             godMode = false;
 
             // loading levels
             // files must be in the debug folder to work
-            test = new LevelReader(platform, player, openDoor, closedDoor, @"test.level");
+            test = new LevelReader(platform, player, openDoor, closedDoor, leverBefore, leverAfter, buttonBefore, buttonAfter, @"test.level");
             test.ReadFile();
             walls = test.Interactable;
         }
