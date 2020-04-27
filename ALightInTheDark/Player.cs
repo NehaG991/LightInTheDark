@@ -7,6 +7,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+enum MovementKeys
+{
+    jumpKey, leftKey, rightKey
+}
+
 namespace ALightInTheDark
 {
     class Player : GameObject
@@ -21,6 +26,10 @@ namespace ALightInTheDark
         //This stores the previous keyboard input
         private KeyboardState kbOld;
 
+        //Keys for movement
+        Keys jumpKey;
+        Keys leftKey;
+        Keys rightKey;
 
         //Velocity
         private int velocityX; //the speed the player is moving left/right
@@ -128,6 +137,9 @@ namespace ALightInTheDark
             velocityYMin = -24;
             accelX = 0;
             accelY = 0;
+            jumpKey = Keys.W;
+            leftKey = Keys.A;
+            rightKey = Keys.D;
 
         }
 
@@ -159,7 +171,7 @@ namespace ALightInTheDark
                 Run(kb);
 
                 //Activates jump method if the player presses a jump button
-                if (kb.IsKeyDown(Keys.W) || kb.IsKeyDown(Keys.Space))
+                if (kb.IsKeyDown(jumpKey) || kb.IsKeyDown(Keys.Space))
                     Jump();
 
                 //The player will accelerate downwards if in the air
@@ -196,12 +208,12 @@ namespace ALightInTheDark
                 flow = 2; //when on the ground, movement is normal
 
             //If one key is pressed, and not the other, the player will move. both keys being pressed results in no movement
-            if (kb.IsKeyDown(Keys.A) && !kb.IsKeyDown(Keys.D))
+            if (kb.IsKeyDown(leftKey) && !kb.IsKeyDown(rightKey))
             { //Accelerate left
                 accelX = -flow;
                 drag = false;
             }
-            else if (kb.IsKeyDown(Keys.D) && !kb.IsKeyDown(Keys.A))
+            else if (kb.IsKeyDown(rightKey) && !kb.IsKeyDown(leftKey))
             { //Accelerate Right
                 accelX = flow;
                 drag = false;
@@ -228,5 +240,25 @@ namespace ALightInTheDark
             }
         }
 
+        /// <summary>
+        /// Allows the changing of movement keys by entering what key you want to change (using an enum) and then what you would like to change it to
+        /// </summary>
+        /// <param name="key">The enum of which key you want to change</param>
+        /// <param name="newKey">The new key</param>
+        public void ChangeKeys(MovementKeys key, Keys newKey)
+        {
+            if (key == MovementKeys.jumpKey)
+            {
+                jumpKey = newKey;
+            }
+            if (key == MovementKeys.leftKey)
+            {
+                leftKey = newKey;
+            }
+            if (key == MovementKeys.rightKey)
+            {
+                rightKey = newKey;
+            }
+        }
     }
 }

@@ -44,6 +44,20 @@ namespace ALightInTheDark
         float time = 0f;
         bool godMode;
 
+        // Control button textures & variables
+        Texture2D jumpTitle;
+        Texture2D jumpSelect;
+        Texture2D leftTitle;
+        Texture2D leftSelect;
+        Texture2D rightTitle;
+        Texture2D rightSelect;
+        Texture2D godModeTitle;
+        Texture2D godModeSelect;
+        Texture2D godModeSelectChecked;
+        char jumpKey = 'w';
+        char leftKey = 'a';
+        char rightKey = 'd';
+
         List<GameObject> walls;
 
         // sprite textures
@@ -126,6 +140,17 @@ namespace ALightInTheDark
             buttonBefore = Content.Load<Texture2D>("buttonBefore");
             buttonAfter = Content.Load<Texture2D>("buttonAfter");
             godMode = false;
+
+            // Control loading
+            jumpTitle = Content.Load<Texture2D>("jumpButton");
+            jumpSelect = Content.Load<Texture2D>("selectionBox");
+            leftTitle = Content.Load<Texture2D>("leftButton");
+            leftSelect = Content.Load<Texture2D>("selectionBox");
+            rightTitle = Content.Load<Texture2D>("rightButton");
+            rightSelect = Content.Load<Texture2D>("selectionBox");
+            godModeTitle = Content.Load<Texture2D>("godMode");
+            godModeSelect = Content.Load<Texture2D>("selectionBox");
+            godModeSelectChecked = Content.Load<Texture2D>("selectionBoxChecked");
 
             // loading levels
             // files must be in the debug folder to work
