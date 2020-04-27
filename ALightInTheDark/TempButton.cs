@@ -19,6 +19,9 @@ namespace ALightInTheDark
         private Texture2D defaultTexture, hoverTexture;
         private Rectangle rectangle;
         private bool hover;
+        private bool clicked;
+
+        public bool Clicked { set { clicked = value; } }
 
         // Temporary constructor to hold a texture and rectangle
         public TempButton(Texture2D defaultTexture, Rectangle rectangle)
@@ -59,6 +62,16 @@ namespace ALightInTheDark
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Special click method for control keys
+        /// </summary>
+        /// <param name="mKey"></param>
+        /// <param name="player"></param>
+        public void ControlClick(MovementKeys mKey, Player player)
+        {
+            
         }
 
         /// <summary>

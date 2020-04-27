@@ -46,17 +46,14 @@ namespace ALightInTheDark
 
         // Control button textures & variables
         Texture2D jumpTitle;
-        Texture2D jumpSelect;
+        TempButton jump;
         Texture2D leftTitle;
-        Texture2D leftSelect;
+        TempButton left;
         Texture2D rightTitle;
-        Texture2D rightSelect;
+        TempButton right;
         Texture2D godModeTitle;
-        Texture2D godModeSelect;
-        Texture2D godModeSelectChecked;
-        char jumpKey = 'w';
-        char leftKey = 'a';
-        char rightKey = 'd';
+        TempButton godModeSelect;
+        TempButton godModeChecked;
 
         List<GameObject> walls;
 
@@ -140,17 +137,19 @@ namespace ALightInTheDark
             buttonBefore = Content.Load<Texture2D>("buttonBefore");
             buttonAfter = Content.Load<Texture2D>("buttonAfter");
             godMode = false;
-
+            
             // Control loading
+            Texture2D select = Content.Load<Texture2D>("selectionBox");
+            Texture2D check = Content.Load<Texture2D>("selectionBoxChecked");
+            jump = new TempButton(select, select, new Rectangle(250, 60, select.Width, select.Height));
+            left = new TempButton(select, select, new Rectangle(250, 150, select.Width, select.Height));
+            right = new TempButton(select, select, new Rectangle(250, 250, select.Width, select.Height));
             jumpTitle = Content.Load<Texture2D>("jumpButton");
-            jumpSelect = Content.Load<Texture2D>("selectionBox");
             leftTitle = Content.Load<Texture2D>("leftButton");
-            leftSelect = Content.Load<Texture2D>("selectionBox");
             rightTitle = Content.Load<Texture2D>("rightButton");
-            rightSelect = Content.Load<Texture2D>("selectionBox");
             godModeTitle = Content.Load<Texture2D>("godMode");
-            godModeSelect = Content.Load<Texture2D>("selectionBox");
-            godModeSelectChecked = Content.Load<Texture2D>("selectionBoxChecked");
+            godModeSelect = new TempButton(select, select, new Rectangle(350, 390, select.Width, select.Height));
+            godModeChecked = new TempButton(check, check, new Rectangle(350, 390, select.Width, select.Height));
 
             // loading levels
             // files must be in the debug folder to work
@@ -221,6 +220,10 @@ namespace ALightInTheDark
                     }
                 case State.Controls:
                     {
+                        if (jump.Click())
+                        {
+                            jump.ControlClick(MovementKeys.jumpKey, test.Player);
+                        }
                         // Various buttons for controls and their functions
                         if (back.Click())
                         {
@@ -232,9 +235,13 @@ namespace ALightInTheDark
                     {
                         if (resume.Click())
                         {
-                            gameState = prevState;
-                            if (prevState == State.Game)
+                            if (godMode)
                             {
+                                gameState = State.EasyMode;
+                            }
+                            else
+                            {
+                                gameState = State.Game;
                                 stopwatch.Start();
                             }
                         }
@@ -346,6 +353,21 @@ namespace ALightInTheDark
                     }
                 case State.Controls:
                     {
+                        spriteBatch.Draw(jumpTitle, new Rectangle(25, 50, jumpTitle.Width, jumpTitle.Height), Color.White);
+                        spriteBatch.Draw(leftTitle, new Rectangle(25, 150, leftTitle.Width, leftTitle.Height), Color.White);
+                        spriteBatch.Draw(rightTitle, new Rectangle(25, 250, rightTitle.Width, rightTitle.Height), Color.White);
+                        spriteBatch.Draw(godModeTitle, new Rectangle(25, 350, godModeTitle.Width, godModeTitle.Height), Color.White);
+                        jump.DrawButton(spriteBatch);
+                        left.DrawButton(spriteBatch);
+                        right.DrawButton(spriteBatch);
+                        if (godMode)
+                        {
+                            godModeChecked.DrawButton(spriteBatch);
+                        }
+                        if(!godMode)
+                        {
+                            godModeSelect.DrawButton(spriteBatch);
+                        }
                         // Draw the control buttons
                         back.DrawButton(spriteBatch);
                         break;
