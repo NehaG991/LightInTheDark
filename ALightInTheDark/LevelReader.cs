@@ -104,6 +104,7 @@ namespace ALightInTheDark
         {
             filePath = path;
             interactable = new List<GameObject>();
+            inputObjects = new List<GameObject>();
             platform = plat;
             playerSprite = play;
             closeDoor = closeD;

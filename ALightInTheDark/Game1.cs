@@ -410,6 +410,10 @@ namespace ALightInTheDark
                         {
                             test.Interactable[i].Draw(spriteBatch);
                         }
+                        for (int i = 0; i < test.InputObjects.Count; i++)
+                        {
+                            test.InputObjects[i].Draw(spriteBatch);
+                        }
 
                         //drawing player
                         test.Player.Draw(spriteBatch);
