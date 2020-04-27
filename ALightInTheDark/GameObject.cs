@@ -40,6 +40,18 @@ namespace ALightInTheDark
             }
         }
 
+        public Texture2D Texture
+        {
+            get
+            {
+                return texture;
+            }
+            set
+            {
+                texture = value;
+            }
+        }
+
         //Constructor
         /*public GameObject(int x, int y, int width, int height, Texture2D image)
         {

@@ -412,18 +412,32 @@ namespace ALightInTheDark
                         {
                             test.Interactable[i].Draw(spriteBatch);
                         }
+
+                        // drawing input objects
                         for (int i = 0; i < test.InputObjects.Count; i++)
                         {
+                            // changes lever image when clicking 'e'
+                            if (test.InputObjects[i].Texture == leverAfter && doorOpen == false)
+                            {
+                                test.InputObjects[i].Texture = leverBefore;
+                            }
+                            else if (test.InputObjects[i].Texture == leverBefore && doorOpen == true)
+                            {
+                                test.InputObjects[i].Texture = leverAfter;
+                            }
                             test.InputObjects[i].Draw(spriteBatch);
                         }
+
+                        
 
                         //drawing player
                         test.Player.Draw(spriteBatch);
 
-                        // drawing door
+                        // drawing door when clicking 'e'
                         if (doorOpen == false)
                         {
                             clDoor.Draw(spriteBatch);
+
                         }
                         else
                         {
