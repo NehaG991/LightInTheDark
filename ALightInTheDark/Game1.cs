@@ -60,7 +60,8 @@ namespace ALightInTheDark
 
         List<GameObject> walls;
         List<GameObject> inputObjects;
-        GameObject door;
+        GameObject oDoor;
+        GameObject clDoor;
 
         // sprite textures
         Texture2D platform;
@@ -162,7 +163,8 @@ namespace ALightInTheDark
             test.ReadFile();
             walls = test.Interactable;
             inputObjects = test.InputObjects;
-            door = test.Door;
+            clDoor = test.DoorClose;
+            oDoor = test.DoorOpen;
 
             doorOpen = false;
         }
@@ -418,6 +420,17 @@ namespace ALightInTheDark
                         //drawing player
                         test.Player.Draw(spriteBatch);
 
+                        // drawing door
+                        if (doorOpen == false)
+                        {
+                            clDoor.Draw(spriteBatch);
+                        }
+                        else
+                        {
+                            oDoor.Draw(spriteBatch);
+                        }
+                        
+
                         //drawing flashlight
 
                         /*if (!godMode)
@@ -576,14 +589,20 @@ namespace ALightInTheDark
 
                 if (itemPressed) //if the door was already open, it closes it
                     if (doorOpen)
+                    {
                         doorOpen = false;
-                    else //if it was closed, it opens
+                    }
+                    else
+                    {
+                        //if it was closed, it opens
                         doorOpen = true;
+                        
+                    }
 
             }
             if (doorOpen) //If the door is open
             {
-                if (player.Position.Intersects(door.Position)) //and the player touches the door
+                if (player.Position.Intersects(oDoor.Position)) //and the player touches the door
                 {
                     gameState = State.Victory; //Victory!
                 }

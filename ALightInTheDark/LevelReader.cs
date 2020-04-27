@@ -38,7 +38,8 @@ namespace ALightInTheDark
         private Player player;
 
         // gameobject for door
-        private GameObject door;
+        private GameObject doorClose;
+        private GameObject doorOpen;
 
         // gameObject for lever
         private GameObject lever;
@@ -64,12 +65,20 @@ namespace ALightInTheDark
             }
         }
 
-        // property for door gameobject
-        public GameObject Door
+        // property for closed door gameobject
+        public GameObject DoorClose
         {
             get
             {
-                return door;
+                return doorClose;
+            }
+        }
+
+        public GameObject DoorOpen
+        {
+            get
+            {
+                return doorOpen;
             }
         }
 
@@ -176,8 +185,9 @@ namespace ALightInTheDark
                             // rectangle for location
                             Rectangle location = new Rectangle((x * (1000 / 10)), (y * (675 / 10)), closeDoor.Width, closeDoor.Height);
 
-                            // making door object and adding it to array
-                            door = new GameObject(location, closeDoor);
+                            // making door objects and adding it to array
+                            doorClose = new GameObject(location, closeDoor);
+                            doorOpen = new GameObject(location, openDoor);
 
                             read++;
                             x++;
