@@ -44,6 +44,9 @@ namespace ALightInTheDark
         float time = 0f;
         bool godMode;
 
+        //This is half of the win condition the other half is making contact with the door
+        bool doorOpen;
+
         // Control button textures & variables
         Texture2D jumpTitle;
         TempButton jump;
@@ -56,6 +59,8 @@ namespace ALightInTheDark
         TempButton godModeChecked;
 
         List<GameObject> walls;
+        List<GameObject> inputObjects;
+        GameObject door;
 
         // sprite textures
         Texture2D platform;
@@ -156,6 +161,10 @@ namespace ALightInTheDark
             test = new LevelReader(platform, player, openDoor, closedDoor, leverBefore, leverAfter, buttonBefore, buttonAfter, @"test.level");
             test.ReadFile();
             walls = test.Interactable;
+            inputObjects = test.InputObjects;
+            door = test.Door;
+
+            doorOpen = false;
         }
 
         /// <summary>
@@ -541,6 +550,39 @@ namespace ALightInTheDark
                     }
                 }
 
+            }
+
+            
+            //This part only trigers if the player has just pressed the interact key (Which is E) as of this frame
+            if(kbState.IsKeyDown(Keys.E) && !kbOld.IsKeyDown(Keys.E))
+            {
+
+                //This is a temporary boolean to determine if the button/lever was toggled
+                bool itemPressed = false;
+
+                //THis cycles through all the buttons/levers and checks if any are colliding with the player.
+                for (int i = 0; i < inputObjects.Count && !itemPressed; i++) //checks to see what objects the player would hit on its current path
+                {
+                    if (inputObjects[i].Position.Intersects(player.Position))
+                    {
+                        //If the player is colliding, then the player has pressed it
+                        itemPressed = true;
+                    }
+                }
+
+                if (itemPressed) //if the door was already open, it closes it
+                    if (doorOpen)
+                        doorOpen = false;
+                    else //if it was closed, it opens
+                        doorOpen = true;
+
+            }
+            if (doorOpen) //If the door is open
+            {
+                if (player.Position.Intersects(door.Position)) //and the player touches the door
+                {
+                    gameState = State.Victory; //Victory!
+                }
             }
         }
 

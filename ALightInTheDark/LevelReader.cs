@@ -31,6 +31,9 @@ namespace ALightInTheDark
         // gameobject list for interactable sprites
         private List<GameObject> interactable;
 
+        // gameobject list for levers and buttons
+        private List<GameObject> inputObjects;
+
         // gameobject for player
         private Player player;
 
@@ -61,6 +64,16 @@ namespace ALightInTheDark
             }
         }
 
+        // property for door gameobject
+        public GameObject Door
+        {
+            get
+            {
+                return door;
+            }
+        }
+
+
         // indexer for gameobjects
         public GameObject this[int index]
         {
@@ -69,12 +82,20 @@ namespace ALightInTheDark
                 return interactable[index];
             }
         }
-
+        
         public List<GameObject> Interactable
         {
             get
             {
                 return interactable;
+            }
+        }
+
+        public List<GameObject> InputObjects
+        {
+            get
+            {
+                return inputObjects;
             }
         }
 
@@ -156,7 +177,6 @@ namespace ALightInTheDark
 
                             // making door object and adding it to array
                             door = new GameObject(location, closeDoor);
-                            interactable.Add(door);
 
                             read++;
                             x++;
@@ -171,7 +191,7 @@ namespace ALightInTheDark
 
                             // making lever object and adding it to array
                             lever = new GameObject(location, beforeLever);
-                            interactable.Add(lever);
+                            inputObjects.Add(lever);
 
                             read++;
                             x++;
@@ -186,7 +206,7 @@ namespace ALightInTheDark
 
                             // making button object and adding it to array
                             button = new GameObject(location, beforeButton);
-                            interactable.Add(button);
+                            inputObjects.Add(button);
 
                             read++;
                             x++;
