@@ -46,6 +46,7 @@ namespace ALightInTheDark
 
         //This is half of the win condition the other half is making contact with the door
         bool doorOpen;
+        bool leverPressable;
 
         // Control button textures & variables
         Texture2D jumpTitle;
@@ -167,6 +168,8 @@ namespace ALightInTheDark
             oDoor = test.DoorOpen;
 
             doorOpen = false;
+            leverPressable = false;
+
         }
 
         /// <summary>
@@ -416,8 +419,8 @@ namespace ALightInTheDark
                         // drawing input objects
                         for (int i = 0; i < test.InputObjects.Count; i++)
                         {
-                            // changes lever image when clicking 'e'
-                            if (test.InputObjects[i].Texture == leverAfter && doorOpen == false)
+                            // changes lever back to default image when clicking 'e'
+                            if (test.InputObjects[i].Texture == leverAfter && (doorOpen == false && leverPressable == false))
                             {
                                 test.InputObjects[i].Texture = leverBefore;
                             }
@@ -425,6 +428,17 @@ namespace ALightInTheDark
                             {
                                 test.InputObjects[i].Texture = leverAfter;
                             }
+
+                            // changing button sprite
+                            if (test.InputObjects[i].Texture == buttonBefore && leverPressable == true)
+                            {
+                                test.InputObjects[i].Texture = buttonAfter;
+                            }
+                            else if (test.InputObjects[i].Texture == buttonAfter && leverPressable == false)
+                            {
+                                test.InputObjects[i].Texture = buttonBefore;
+                            }
+                            
                             test.InputObjects[i].Draw(spriteBatch);
                         }
 
@@ -588,20 +602,34 @@ namespace ALightInTheDark
             if(kbState.IsKeyDown(Keys.E) && !kbOld.IsKeyDown(Keys.E))
             {
 
-                //This is a temporary boolean to determine if the button/lever was toggled
-                bool itemPressed = false;
+                
+                //This is a temporary boolean to determine if the lever was toggled
+                bool leverPressed = false;
 
                 //THis cycles through all the buttons/levers and checks if any are colliding with the player.
-                for (int i = 0; i < inputObjects.Count && !itemPressed; i++) //checks to see what objects the player would hit on its current path
+                for (int i = 0; i < inputObjects.Count && !leverPressed; i++) //checks to see what objects the player would hit on its current path
                 {
-                    if (inputObjects[i].Position.Intersects(player.Position))
+
+                    // makes lever pressable if button is pressable
+                    if (inputObjects[i].Position.Intersects(player.Position) && (inputObjects[i].Texture == leverBefore || inputObjects[i].Texture == leverAfter) && leverPressable == true)
                     {
                         //If the player is colliding, then the player has pressed it
-                        itemPressed = true;
+                        leverPressed = true;
+                    }
+
+                    // changes button bool 
+                    if (inputObjects[i].Position.Intersects(player.Position) && inputObjects[i].Texture == buttonBefore)
+                    {
+                        leverPressable = true;
+                    }
+                    else if (inputObjects[i].Position.Intersects(player.Position) && inputObjects[i].Texture == buttonAfter)
+                    {
+                        leverPressable = false;
+                        doorOpen = false;
                     }
                 }
 
-                if (itemPressed) //if the door was already open, it closes it
+                if (leverPressed) //if the door was already open, it closes it
                     if (doorOpen)
                     {
                         doorOpen = false;
