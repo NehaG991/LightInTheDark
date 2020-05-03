@@ -31,6 +31,9 @@ namespace ALightInTheDark
         Keys leftKey;
         Keys rightKey;
 
+        //player beginning location
+        private Rectangle startRect;
+
         //Velocity
         private int velocityX; //the speed the player is moving left/right
         private int velocityY; //the speed the player is moving up/down
@@ -119,6 +122,14 @@ namespace ALightInTheDark
                 accelY = value;
             }
         }
+
+        /// <summary>
+        /// Returns the starting rectangle
+        /// </summary>
+        public Rectangle StartRectangle
+        {
+            get { return startRect; }
+        }
         
         //Constructor
         /// <summary>
@@ -140,6 +151,8 @@ namespace ALightInTheDark
             jumpKey = Keys.W;
             leftKey = Keys.A;
             rightKey = Keys.D;
+
+            startRect = pos;
 
         }
 
@@ -259,6 +272,21 @@ namespace ALightInTheDark
             {
                 rightKey = newKey;
             }
+        }
+
+        /// <summary>
+        /// Check if the player is out of bounds (dead)
+        /// </summary>
+        /// <param name="height">height of the current window</param>
+        /// <returns>True if dead</returns>
+        public bool IsPlayerDead(int height)
+        {
+            if(position.Y > height + 10)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

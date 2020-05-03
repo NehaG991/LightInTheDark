@@ -256,6 +256,7 @@ namespace ALightInTheDark
                             if (godMode)
                             {
                                 gameState = State.EasyMode;
+                                stopwatch.Start();
                             }
                             else
                             {
@@ -272,6 +273,17 @@ namespace ALightInTheDark
                         {
                             gameState = State.Game;
                             // Code to restart the level
+                            deaths = 0;
+                            // reset player to base location
+                            test.Player.X = test.Player.StartRectangle.X;
+                            test.Player.Y = test.Player.StartRectangle.Y;
+                            stopwatch.Reset();
+                            stopwatch.Start();
+                            // reset intereactable objects
+                            doorOpen = false;
+                            leverPressable = false;
+                            
+                            
                         }
                         if (quit.Click())
                         {
@@ -300,6 +312,7 @@ namespace ALightInTheDark
                             gameState = State.EasyMode;
                         }
                         // Other game update code
+                        
                         break;
                     }
                 case State.Victory:
@@ -446,10 +459,19 @@ namespace ALightInTheDark
                             test.InputObjects[i].Draw(spriteBatch);
                         }
 
-                        
+                        // check if player is dead
+                        if (test.Player.IsPlayerDead(GraphicsDevice.Viewport.Height))
+                        {
+                            deaths++;
+                            // reset player to base location
+                            test.Player.X = test.Player.StartRectangle.X;
+                            test.Player.Y = test.Player.StartRectangle.Y;
+                        }
 
                         //drawing player
                         test.Player.Draw(spriteBatch);
+
+                        
 
                         // drawing door when clicking 'e'
                         if (doorOpen == false)
@@ -465,13 +487,12 @@ namespace ALightInTheDark
 
                         //drawing flashlight
 
-                        /*if (!godMode)
+                        if (!godMode)
                         {
                             // vector puts clear circle at top white corner of game dimensions
                             spriteBatch.Draw(flashlight, new Vector2(-1275 + test.Player.X, -665 + test.Player.Y), Color.White);
-                        }*/
+                        }
                         
-                       
                         
                         // Draw the UI
                         spriteBatch.DrawString(font, "Level: " + level, new Vector2(0, 50), Color.White);
