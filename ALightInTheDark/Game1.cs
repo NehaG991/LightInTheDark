@@ -225,9 +225,13 @@ namespace ALightInTheDark
                             gameState = prevState;
                         }
                         // enable god mode
-                        if (easy.Click())
+                        if (easy.Click() && godMode == false)
                         {
                             godMode = true;
+                        } 
+                        else if(easy.Click() && godMode == true)
+                        {
+                            godMode = false;
                         }
 
                         break;
