@@ -274,6 +274,26 @@ namespace ALightInTheDark
             }
         }
 
+        public Keys GetMovementKey(MovementKeys key)
+        {
+            if (key == MovementKeys.jumpKey)
+            {
+                return jumpKey;
+            }
+            if (key == MovementKeys.leftKey)
+            {
+                return leftKey;
+            }
+            if (key == MovementKeys.rightKey)
+            {
+                return rightKey;
+            }
+            else
+            {
+                return Keys.None;
+            }
+        }
+
         /// <summary>
         /// Check if the player is out of bounds (dead)
         /// </summary>

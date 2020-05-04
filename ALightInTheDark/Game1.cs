@@ -58,6 +58,7 @@ namespace ALightInTheDark
         Texture2D godModeTitle;
         TempButton godModeSelect;
         TempButton godModeChecked;
+        TempButton reset;
 
         List<GameObject> walls;
         List<GameObject> inputObjects;
@@ -148,15 +149,18 @@ namespace ALightInTheDark
             // Control loading
             Texture2D select = Content.Load<Texture2D>("selectionBox");
             Texture2D check = Content.Load<Texture2D>("selectionBoxChecked");
-            jump = new TempButton(select, select, new Rectangle(250, 60, select.Width, select.Height));
-            left = new TempButton(select, select, new Rectangle(250, 150, select.Width, select.Height));
-            right = new TempButton(select, select, new Rectangle(250, 250, select.Width, select.Height));
+            Texture2D selectHover = Content.Load<Texture2D>("selectionBoxHover");
+            jump = new TempButton(select, selectHover, new Rectangle(250, 175, select.Width, select.Height));
+            left = new TempButton(select, selectHover, new Rectangle(250, 275, select.Width, select.Height));
+            right = new TempButton(select, selectHover, new Rectangle(250, 375, select.Width, select.Height));
             jumpTitle = Content.Load<Texture2D>("jumpButton");
             leftTitle = Content.Load<Texture2D>("leftButton");
             rightTitle = Content.Load<Texture2D>("rightButton");
             godModeTitle = Content.Load<Texture2D>("godMode");
-            godModeSelect = new TempButton(select, select, new Rectangle(350, 390, select.Width, select.Height));
-            godModeChecked = new TempButton(check, check, new Rectangle(350, 390, select.Width, select.Height));
+            godModeSelect = new TempButton(select, select, new Rectangle(350, 515, select.Width, select.Height));
+            godModeChecked = new TempButton(check, check, new Rectangle(450, 515, select.Width, select.Height));
+            reset = new TempButton(select, selectHover, new Rectangle(850, 415, select.Width, select.Height));
+            
 
             // loading levels
             // files must be in the debug folder to work
@@ -238,11 +242,39 @@ namespace ALightInTheDark
                     }
                 case State.Controls:
                     {
+                        // Various buttons for controls and their functions
+                        // If a button is clicked change the control through another method
                         if (jump.Click())
                         {
-                            jump.ControlClick(MovementKeys.jumpKey, test.Player);
+                            jump.ControlEdit(MovementKeys.jumpKey, test.Player);
                         }
-                        // Various buttons for controls and their functions
+                        if (left.Click())
+                        {
+                            left.ControlEdit(MovementKeys.leftKey, test.Player);
+                        }
+                        if (right.Click())
+                        {
+                            right.ControlEdit(MovementKeys.rightKey, test.Player);
+                        }
+                        // Toggle god mode on and off
+                        if (godModeSelect.Click())
+                        {
+                            godMode = true;
+                            Console.WriteLine(godMode);
+                        }
+                        if (godModeChecked.Click())
+                        {
+                            godMode = false;
+                            Console.WriteLine(godMode);
+                        }
+                        // Reset button
+                        if (reset.Click())
+                        {
+                            test.Player.ChangeKeys(MovementKeys.jumpKey, Keys.W);
+                            test.Player.ChangeKeys(MovementKeys.leftKey, Keys.A);
+                            test.Player.ChangeKeys(MovementKeys.rightKey, Keys.D);
+                            godMode = false;
+                        }
                         if (back.Click())
                         {
                             gameState = prevState;
@@ -293,6 +325,10 @@ namespace ALightInTheDark
                     }
                 case State.Game:
                     {
+                        if (godMode)
+                        {
+                            gameState = State.EasyMode;
+                        }
                         kbOld = kbState;
                         kbState = Keyboard.GetState();
                         MovementManager(test.Player);
@@ -309,6 +345,7 @@ namespace ALightInTheDark
                         }
                         if (SingleKeyPress(Keys.G))
                         {
+                            godMode = true;
                             gameState = State.EasyMode;
                         }
                         // Other game update code
@@ -333,6 +370,10 @@ namespace ALightInTheDark
                     }
                 case State.EasyMode:
                     {
+                        if (!godMode)
+                        {
+                            gameState = State.Game;
+                        }
                         kbOld = kbState;
                         kbState = Keyboard.GetState();
                         MovementManager(test.Player);
@@ -347,6 +388,7 @@ namespace ALightInTheDark
                         }
                         if (SingleKeyPress(Keys.G))
                         {
+                            godMode = false;
                             gameState = State.Game;
                         }
                         // Easy game update code
@@ -388,22 +430,28 @@ namespace ALightInTheDark
                     }
                 case State.Controls:
                     {
-                        spriteBatch.Draw(jumpTitle, new Rectangle(25, 50, jumpTitle.Width, jumpTitle.Height), Color.White);
-                        spriteBatch.Draw(leftTitle, new Rectangle(25, 150, leftTitle.Width, leftTitle.Height), Color.White);
-                        spriteBatch.Draw(rightTitle, new Rectangle(25, 250, rightTitle.Width, rightTitle.Height), Color.White);
-                        spriteBatch.Draw(godModeTitle, new Rectangle(25, 350, godModeTitle.Width, godModeTitle.Height), Color.White);
+                        // Draw the control buttons
+                        spriteBatch.DrawString(font, "To change the controls, hold down a button \nthen press the key you want to change it to.", new Vector2(225, 50), Color.White);
+                        spriteBatch.Draw(jumpTitle, new Rectangle(25, 175, jumpTitle.Width, jumpTitle.Height), Color.White);
+                        spriteBatch.Draw(leftTitle, new Rectangle(25, 275, leftTitle.Width, leftTitle.Height), Color.White);
+                        spriteBatch.Draw(rightTitle, new Rectangle(25, 375, rightTitle.Width, rightTitle.Height), Color.White);
+                        spriteBatch.Draw(godModeTitle, new Rectangle(25, 475, godModeTitle.Width, godModeTitle.Height), Color.White);
                         jump.DrawButton(spriteBatch);
                         left.DrawButton(spriteBatch);
                         right.DrawButton(spriteBatch);
+                        reset.DrawButton(spriteBatch);
+                        spriteBatch.DrawString(font, test.Player.GetMovementKey(MovementKeys.jumpKey).ToString(), new Vector2(280, 180), Color.White);
+                        spriteBatch.DrawString(font, test.Player.GetMovementKey(MovementKeys.leftKey).ToString(), new Vector2(280, 280), Color.White);
+                        spriteBatch.DrawString(font, test.Player.GetMovementKey(MovementKeys.rightKey).ToString(), new Vector2(280, 380), Color.White);
                         if (godMode)
                         {
                             godModeChecked.DrawButton(spriteBatch);
                         }
-                        if(!godMode)
+                        if (!godMode)
                         {
                             godModeSelect.DrawButton(spriteBatch);
                         }
-                        // Draw the control buttons
+                        spriteBatch.DrawString(font, "Reset", new Vector2(850, 375), Color.White);
                         back.DrawButton(spriteBatch);
                         break;
                     }
@@ -697,6 +745,5 @@ namespace ALightInTheDark
             }
             return false;
         }
-
     }
 }

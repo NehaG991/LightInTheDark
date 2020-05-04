@@ -65,13 +65,21 @@ namespace ALightInTheDark
         }
 
         /// <summary>
-        /// Special click method for control keys
+        /// Change a player movement key
         /// </summary>
-        /// <param name="mKey"></param>
-        /// <param name="player"></param>
-        public void ControlClick(MovementKeys mKey, Player player)
+        /// <param name="mKey">The movement key to change</param>
+        /// <param name="player">The player whos movement will change</param>
+        public void ControlEdit(MovementKeys mKey, Player player)
         {
-            
+            // Gets all keys currently pressed and stores them
+            KeyboardState kbState = Keyboard.GetState();
+            Keys[] keyArray = kbState.GetPressedKeys();
+
+            // If there are keys pressed, changes the player's movement key to the new one
+            if (keyArray.Length > 0)
+            {
+                player.ChangeKeys(mKey, keyArray[0]);
+            }
         }
 
         /// <summary>
