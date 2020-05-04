@@ -243,6 +243,7 @@ namespace ALightInTheDark
                 case State.Controls:
                     {
                         // Various buttons for controls and their functions
+                        // If a button is clicked change the control through another method
                         if (jump.Click())
                         {
                             jump.ControlEdit(MovementKeys.jumpKey, test.Player);
@@ -255,6 +256,7 @@ namespace ALightInTheDark
                         {
                             right.ControlEdit(MovementKeys.rightKey, test.Player);
                         }
+                        // Toggle god mode on and off
                         if (godModeSelect.Click())
                         {
                             godMode = true;
@@ -265,6 +267,7 @@ namespace ALightInTheDark
                             godMode = false;
                             Console.WriteLine(godMode);
                         }
+                        // Reset button
                         if (reset.Click())
                         {
                             test.Player.ChangeKeys(MovementKeys.jumpKey, Keys.W);
@@ -521,7 +524,7 @@ namespace ALightInTheDark
                         // drawing door when clicking 'e'
                         if (doorOpen == false)
                         {
-                            //clDoor.Draw(spriteBatch);
+                            clDoor.Draw(spriteBatch);
 
                         }
                         else
