@@ -126,7 +126,7 @@ namespace ALightInTheDark
             back = new TempButton(Content.Load<Texture2D>("backButton"), Content.Load<Texture2D>("backButtonHover"), new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 2 + 150, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
             resume = new TempButton(Content.Load<Texture2D>("resumeButton"), Content.Load<Texture2D>("resumeButtonHover"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 100, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
             restart = new TempButton(Content.Load<Texture2D>("restartButton"), Content.Load<Texture2D>("restartButtonHover"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
-            easy = new TempButton(Content.Load<Texture2D>("startButton"), Content.Load<Texture2D>("startButtonHover"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 100, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
+            easy = new TempButton(Content.Load<Texture2D>("godMode"), Content.Load<Texture2D>("godMode"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 100, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
 
             // Load the font
             font = Content.Load<SpriteFont>("font");
@@ -323,6 +323,10 @@ namespace ALightInTheDark
                         }
                         if (quit.Click())
                         {
+                            Exit();
+                        }
+                        if (back.Click())
+                        {
                             gameState = State.MainMenu;
                         }
                         break;
@@ -487,11 +491,11 @@ namespace ALightInTheDark
 
                         //drawing flashlight
 
-                        /*if (!godMode)
+                        if (!godMode)
                         {
                             // vector puts clear circle at top white corner of game dimensions
                             spriteBatch.Draw(flashlight, new Vector2(-1275 + test.Player.X, -665 + test.Player.Y), Color.White);
-                        }*/
+                        }
                         
                         
                         // Draw the UI
@@ -504,6 +508,10 @@ namespace ALightInTheDark
                 case State.Victory:
                     {
                         // Draw the victory stuff
+                        spriteBatch.DrawString(font, "Level passed!", new Vector2(50, 50), Color.White);
+                        quit.DrawButton(spriteBatch);
+                        back.DrawButton(spriteBatch);
+                        win = false;
                         break;
                     }
                 case State.EasyMode:
