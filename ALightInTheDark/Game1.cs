@@ -199,7 +199,17 @@ namespace ALightInTheDark
             {
                 case State.MainMenu:
                     {
+                        // code to reset everything back after completing the level and going back to the main menu
                         win = false;
+                        deaths = 0;
+                        // reset player to base location
+                        test.Player.X = test.Player.StartRectangle.X;
+                        test.Player.Y = test.Player.StartRectangle.Y;
+                        stopwatch.Reset();
+                        stopwatch.Start();
+                        // reset intereactable objects
+                        doorOpen = false;
+                        leverPressable = false;
                         if (start.Click())
                         {
                             gameState = State.Game;
