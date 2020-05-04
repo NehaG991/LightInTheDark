@@ -64,14 +64,31 @@ namespace ALightInTheDark
             return false;
         }
 
+        public bool ClickElsewhere()
+        {
+            MouseState mouse = Mouse.GetState();
+
+            if (!rectangle.Contains(mouse.X, mouse.Y) && mouse.LeftButton == ButtonState.Pressed)
+            {
+                return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Special click method for control keys
         /// </summary>
         /// <param name="mKey"></param>
         /// <param name="player"></param>
-        public void ControlClick(MovementKeys mKey, Player player)
+        public void ControlEdit(MovementKeys mKey, Player player)
         {
-            
+            KeyboardState kbState = Keyboard.GetState();
+            Keys[] keyArray = kbState.GetPressedKeys();
+
+            if (keyArray.Length > 0)
+            {
+                player.ChangeKeys(mKey, keyArray[0]);
+            }
         }
 
         /// <summary>
