@@ -127,7 +127,7 @@ namespace ALightInTheDark
             back = new TempButton(Content.Load<Texture2D>("backButton"), Content.Load<Texture2D>("backButtonHover"), new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 2 + 150, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
             resume = new TempButton(Content.Load<Texture2D>("resumeButton"), Content.Load<Texture2D>("resumeButtonHover"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 100, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
             restart = new TempButton(Content.Load<Texture2D>("restartButton"), Content.Load<Texture2D>("restartButtonHover"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
-            easy = new TempButton(Content.Load<Texture2D>("godMode"), Content.Load<Texture2D>("godMode"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 100, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
+            easy = new TempButton(Content.Load<Texture2D>("easyIndicator"), Content.Load<Texture2D>("godMode"), new Rectangle(GraphicsDevice.Viewport.Width / 2 - GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 2 - 100, GraphicsDevice.Viewport.Width / 4, GraphicsDevice.Viewport.Height / 8));
 
             // Load the font
             font = Content.Load<SpriteFont>("font");
@@ -199,6 +199,7 @@ namespace ALightInTheDark
             {
                 case State.MainMenu:
                     {
+                        win = false;
                         if (start.Click())
                         {
                             gameState = State.Game;
@@ -565,8 +566,58 @@ namespace ALightInTheDark
                 case State.EasyMode:
                     {
                         // Draw all the easy mode game stuff
-                        
-                        
+                        // test level
+                        // drawing objects
+                        for (int i = 0; i < test.Interactable.Count; i++)
+                        {
+                            test.Interactable[i].Draw(spriteBatch);
+                        }
+
+                        // drawing input objects
+                        for (int i = 0; i < test.InputObjects.Count; i++)
+                        {
+                            // changes lever back to default image when clicking 'e'
+                            if (test.InputObjects[i].Texture == leverAfter && (doorOpen == false && leverPressable == false))
+                            {
+                                test.InputObjects[i].Texture = leverBefore;
+                            }
+                            else if (test.InputObjects[i].Texture == leverBefore && doorOpen == true)
+                            {
+                                test.InputObjects[i].Texture = leverAfter;
+                            }
+
+                            // changing button sprite
+                            if (test.InputObjects[i].Texture == buttonBefore && leverPressable == true)
+                            {
+                                test.InputObjects[i].Texture = buttonAfter;
+                            }
+                            else if (test.InputObjects[i].Texture == buttonAfter && leverPressable == false)
+                            {
+                                test.InputObjects[i].Texture = buttonBefore;
+                            }
+
+                            test.InputObjects[i].Draw(spriteBatch);
+                        }
+
+                        // drawing door when clicking 'e'
+                        if (doorOpen == false)
+                        {
+                            clDoor.Draw(spriteBatch);
+
+                        }
+                        else
+                        {
+                            oDoor.Draw(spriteBatch);
+                        }
+
+                        // check if player is dead
+                        if (test.Player.IsPlayerDead(GraphicsDevice.Viewport.Height))
+                        {
+                            deaths++;
+                            // reset player to base location
+                            test.Player.X = test.Player.StartRectangle.X;
+                            test.Player.Y = test.Player.StartRectangle.Y;
+                        }
                         // draw easy mode indicator
                         spriteBatch.Draw(easyIndicator, new Vector2(50, 50), Color.White);
                         
